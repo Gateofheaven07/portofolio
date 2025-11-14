@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   title: "Portofolio Taufik",
   description: "Portofolio Taufik",
   icons: {
-    icon: "/code.jpg",
-    shortcut: "/code.jpg",
-    apple: "/code.jpg",
+    icon: "/logoo.png",
+    shortcut: "/logoo.png",
+    apple: "/logoo.png",
   },
   generator: "v0.app",
 }
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${orbitron.variable}`}>
-      <body className={`${orbitron.variable} antialiased`}>
+      <body className={`${orbitron.variable} antialiased overflow-x-hidden max-w-full`}>
         <StarsBackground />
         {children}
       </body>

@@ -96,7 +96,15 @@ export default function ProfileCard() {
             <button 
               onClick={() => {
                 const contactSection = document.getElementById('contact')
-                contactSection?.scrollIntoView({ behavior: 'smooth' })
+                if (contactSection) {
+                  const offset = window.innerWidth < 640 ? 60 : 80
+                  const elementPosition = contactSection.getBoundingClientRect().top
+                  const offsetPosition = elementPosition + window.pageYOffset - offset
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  })
+                }
               }}
               className="w-full py-2 sm:py-3 bg-blue-600 hover:bg-blue-500 text-white font-orbitron text-sm sm:text-base rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]"
             >
@@ -107,7 +115,15 @@ export default function ProfileCard() {
             <button 
               onClick={() => {
                 const projectsSection = document.getElementById('projects')
-                projectsSection?.scrollIntoView({ behavior: 'smooth' })
+                if (projectsSection) {
+                  const offset = window.innerWidth < 640 ? 60 : 80
+                  const elementPosition = projectsSection.getBoundingClientRect().top
+                  const offsetPosition = elementPosition + window.pageYOffset - offset
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  })
+                }
               }}
               className="w-full py-2 sm:py-3 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 font-orbitron text-sm sm:text-base rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
             >

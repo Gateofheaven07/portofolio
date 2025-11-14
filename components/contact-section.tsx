@@ -77,7 +77,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="min-h-screen py-20 px-4 relative">
+    <section id="contact" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full">
       <div className="absolute inset-0 cyber-grid opacity-5" />
       <div
         className="absolute inset-0"
@@ -91,8 +91,8 @@ export default function ContactSection() {
 
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon">Contact Me</h2>
-          <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">Contact Me</h2>
+          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
             Siap mewujudkan visi digital Anda? Mari mulai percakapan.
           </p>
 
@@ -106,8 +106,8 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div className="glassmorphism rounded-2xl p-8 relative overflow-hidden">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
+          <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden">
             <div className="absolute inset-0 opacity-20">
               <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" />
               <div
@@ -229,7 +229,7 @@ export default function ContactSection() {
           </div>
 
           <div className="space-y-8">
-            <div className="glassmorphism rounded-2xl p-8">
+            <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8">
               <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-6">Contact Me</h3>
 
               <div className="space-y-6">
@@ -265,7 +265,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="glassmorphism rounded-2xl p-8">
+            <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8">
               <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-pink)] mb-6">Waktu Respon</h3>
               <p className="text-gray-300 leading-relaxed mb-4">
                 Saya biasanya merespons pesan dalam 24 jam. Untuk proyek atau kolaborasi yang mendesak, jangan ragu untuk

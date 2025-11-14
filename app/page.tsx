@@ -99,7 +99,7 @@ export default function Home() {
   }
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen w-full overflow-x-hidden max-w-full">
       <Navbar />
 
       {/* Enhanced Custom Cursor */}
@@ -123,14 +123,25 @@ export default function Home() {
       />
 
       {/* Navigation Indicator - Vertical layout, adjusted position for mobile */}
-      <div className="flex flex-col fixed right-2 sm:right-4 md:right-6 lg:right-8 top-1/2 transform -translate-y-1/2 z-40 space-y-2 sm:space-y-3 md:space-y-4">
+      <div className="hidden sm:flex flex-col fixed right-2 md:right-4 lg:right-6 top-1/2 transform -translate-y-1/2 z-40 space-y-2 md:space-y-3">
         {["hero", "projects", "timeline", "about", "skills", "contact"].map((section) => (
           <button
             key={section}
-            onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
-            className={`block w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full border-2 transition-all duration-300 ${
+            onClick={() => {
+              const element = document.getElementById(section)
+              if (element) {
+                const offset = window.innerWidth < 640 ? 60 : 80
+                const elementPosition = element.getBoundingClientRect().top
+                const offsetPosition = elementPosition + window.pageYOffset - offset
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+                })
+              }
+            }}
+            className={`block w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-2.5 md:h-2.5 rounded-full border transition-all duration-300 ${
               activeSection === section
-                ? "border-cyan-400 bg-cyan-400 shadow-[0_0_10px_rgba(0,191,255,0.5)]"
+                ? "border-cyan-400 bg-cyan-400 shadow-[0_0_6px_rgba(0,191,255,0.3)]"
                 : "border-gray-600 hover:border-cyan-400"
             }`}
             title={section.charAt(0).toUpperCase() + section.slice(1)}

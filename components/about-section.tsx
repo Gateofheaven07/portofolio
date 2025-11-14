@@ -46,7 +46,7 @@ export default function AboutSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="about" className="min-h-screen py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
+    <section ref={sectionRef} id="about" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12 relative overflow-hidden overflow-x-hidden w-full max-w-full">
       <div
         ref={parallaxRef}
         className="absolute inset-0 z-0"
@@ -110,19 +110,19 @@ export default function AboutSection() {
           {/* Left Column - Personal Story */}
           <div className="space-y-8">
             <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-200 h-full">
-              <div className="rounded-2xl p-8 space-y-6 h-full" style={{
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.8)"
               }}>
-                <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-cyan)] mb-4">Arsitek Digital</h3>
-                <p className="text-gray-300 leading-relaxed">
+                <h3 className="text-xl sm:text-2xl font-orbitron font-bold text-[var(--neon-cyan)] mb-3 sm:mb-4">Arsitek Digital</h3>
+                <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                   Sebagai seorang IT Enthusiast, saya menciptakan pengalaman yang menjembatani kesenjangan antara
                   intuisi manusia dan presisi mesin. Perjalanan saya dimulai dari rasa ingin tahu yang mendalam, di mana
                   baris-baris kode menjadi bahasa pertama saya dalam menciptakan sesuatu.
                 </p>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                   Dari hari-hari awal debugging hingga larut malam hingga membangun sistem yang kompleks, setiap tantangan
                   telah menjadi batu loncatan menuju penguasaan seni kerajinan digital. Saya terus belajar dan berkembang
                   dalam berbagai bidang teknologi informasi untuk menciptakan solusi yang inovatif dan berkualitas.
@@ -131,14 +131,14 @@ export default function AboutSection() {
             </div>
 
             <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-400 h-full">
-              <div className="rounded-2xl p-8 space-y-6 h-full" style={{
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.8)"
               }}>
                 <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-4">Filosofi & Visi</h3>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                   Saya percaya bahwa teknologi seharusnya tidak terlihat namun kuat, intuitif namun canggih. Pendekatan saya
                   menggabungkan inovasi terdepan dengan desain yang berpusat pada manusia, menciptakan solusi yang tidak hanya
                   berfungsi—tetapi juga menginspirasi.
@@ -152,14 +152,14 @@ export default function AboutSection() {
 
             {/* CTA moved here to align and match width with left column cards */}
             <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-500 h-full">
-              <div className="rounded-2xl p-8 space-y-6 h-full" style={{
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.8)"
               }}>
                 <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-cyan)]">Mari Membangun Masa Depan</h3>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                   Siap mengubah visi Anda menjadi kenyataan digital? Mari berkolaborasi dan menciptakan sesuatu yang luar biasa
                   bersama-sama.
                 </p>
@@ -167,7 +167,15 @@ export default function AboutSection() {
                   <button 
                     onClick={() => {
                       const contactSection = document.getElementById('contact')
-                      contactSection?.scrollIntoView({ behavior: 'smooth' })
+                      if (contactSection) {
+                        const offset = window.innerWidth < 640 ? 60 : 80
+                        const elementPosition = contactSection.getBoundingClientRect().top
+                        const offsetPosition = elementPosition + window.pageYOffset - offset
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        })
+                      }
                     }}
                     className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-cyan)] border-2 border-[var(--neon-cyan)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-cyan)]"
                   >
@@ -214,7 +222,7 @@ export default function AboutSection() {
             </div>
 
             <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-500 h-full">
-              <div className="rounded-2xl p-8 space-y-6 h-full" style={{
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",

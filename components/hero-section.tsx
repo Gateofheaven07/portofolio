@@ -97,7 +97,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-teal-900 via-slate-900 to-slate-800"
+      className="relative min-h-screen overflow-hidden overflow-x-hidden w-full max-w-full bg-gradient-to-br from-teal-900 via-slate-900 to-slate-800"
       style={{
         perspective: "1000px",
         transformStyle: "preserve-3d"
@@ -112,7 +112,7 @@ export default function HeroSection() {
       </div>
 
       {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 pt-16 sm:pt-20 md:pt-24 lg:pt-28 min-h-screen flex items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-20 sm:pt-24 md:pt-28 lg:pt-32 min-h-screen flex items-center">
         <div className="flex flex-col lg:flex-row lg:items-center gap-6 sm:gap-8 w-full">
           {/* Left Side - Main Content */}
           <div className="text-left space-y-6 sm:space-y-8 max-w-full lg:max-w-3xl flex-1">
@@ -144,7 +144,15 @@ export default function HeroSection() {
               <button 
                 onClick={() => {
                   const aboutSection = document.getElementById('about')
-                  aboutSection?.scrollIntoView({ behavior: 'smooth' })
+                  if (aboutSection) {
+                    const offset = window.innerWidth < 640 ? 60 : 80
+                    const elementPosition = aboutSection.getBoundingClientRect().top
+                    const offsetPosition = elementPosition + window.pageYOffset - offset
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    })
+                  }
                 }}
                 className="px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base bg-transparent border border-gray-500 text-gray-300 font-orbitron rounded-lg hover:border-white hover:text-white transition-all duration-300"
               >

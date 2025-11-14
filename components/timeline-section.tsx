@@ -262,15 +262,15 @@ function TimelineNode({
   return (
     <div
       ref={nodeRef}
-      className="timeline-node opacity-0 transform translate-x-8 transition-all duration-700 relative flex items-center group cursor-pointer"
+      className="timeline-node opacity-0 transform translate-x-4 sm:translate-x-6 md:translate-x-8 transition-all duration-700 relative flex items-start sm:items-center group cursor-pointer"
       onClick={onClick}
     >
       {/* Timeline Line Connection */}
-      <div className="absolute left-6 top-0 w-0.5 h-full bg-gradient-to-b from-[var(--neon-cyan)] to-transparent opacity-30" />
+      <div className="absolute left-3 sm:left-4 md:left-6 top-0 w-0.5 h-full bg-gradient-to-b from-[var(--neon-cyan)] to-transparent opacity-30" />
 
       {/* Node Circle */}
       <div
-        className="relative z-10 w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-125"
+        className="relative z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-125 flex-shrink-0"
         style={{
           borderColor: getNodeColor(achievement.type),
           backgroundColor: "rgba(0, 0, 0, 0.8)",
@@ -278,7 +278,7 @@ function TimelineNode({
         }}
       >
         <div
-          className="w-4 h-4 rounded-full animate-pulse"
+          className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-full animate-pulse"
           style={{ backgroundColor: getNodeColor(achievement.type) }}
         />
 
@@ -290,7 +290,7 @@ function TimelineNode({
       </div>
 
       {/* Content Card */}
-      <div className="ml-8 glassmorphism rounded-lg p-6 flex-1 group-hover:border-[var(--neon-cyan)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,191,255,0.3)]">
+      <div className="ml-3 sm:ml-4 md:ml-8 glassmorphism rounded-lg p-4 sm:p-5 md:p-6 flex-1 group-hover:border-[var(--neon-cyan)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,191,255,0.3)] min-w-0">
         <div className="flex items-start justify-between mb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -306,10 +306,10 @@ function TimelineNode({
                 {achievement.type}
               </span>
             </div>
-            <h3 className="text-lg font-orbitron font-bold text-white group-hover:text-[var(--neon-cyan)] transition-colors">
+            <h3 className="text-base sm:text-lg font-orbitron font-bold text-white group-hover:text-[var(--neon-cyan)] transition-colors">
               {achievement.title}
             </h3>
-            <p className="text-[var(--neon-green)] font-orbitron text-sm">{achievement.organization}</p>
+            <p className="text-[var(--neon-green)] font-orbitron text-xs sm:text-sm">{achievement.organization}</p>
           </div>
 
           {/* Click Indicator */}
@@ -326,7 +326,7 @@ function TimelineNode({
           </div>
         </div>
 
-        <p className="text-gray-400 text-sm leading-relaxed mb-4">{achievement.description}</p>
+        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">{achievement.description}</p>
 
         {/* Skills Preview */}
         <div className="flex flex-wrap gap-1">
@@ -362,7 +362,7 @@ export default function TimelineSection() {
   }
 
   return (
-    <section id="timeline" className="min-h-screen py-20 px-4 relative">
+    <section id="timeline" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full">
       {/* Background Effects */}
       <div className="absolute inset-0 cyber-grid opacity-5" />
       <div
@@ -377,11 +377,11 @@ export default function TimelineSection() {
         }}
       />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon">Achievement Timeline</h2>
-          <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">Achievement Timeline</h2>
+          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
           Perjalanan pencapaian dan sertifikasi profesional saya
           </p>
 
@@ -394,9 +394,9 @@ export default function TimelineSection() {
         </div>
 
         {/* Timeline */}
-        <div className="relative space-y-8">
+        <div className="relative space-y-6 sm:space-y-8">
           {/* Main Timeline Line */}
-          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--neon-cyan)] via-[var(--neon-green)] to-[var(--neon-pink)] opacity-50" />
+          <div className="absolute left-3 sm:left-4 md:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--neon-cyan)] via-[var(--neon-green)] to-[var(--neon-pink)] opacity-50" />
 
           {achievements.map((achievement, index) => (
             <TimelineNode

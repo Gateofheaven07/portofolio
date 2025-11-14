@@ -282,7 +282,7 @@ export default function SkillsSection() {
   }
 
   return (
-    <section ref={sectionRef} id="skills" className="min-h-screen py-20 px-4 relative overflow-hidden">
+    <section ref={sectionRef} id="skills" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-hidden overflow-x-hidden w-full max-w-full">
       {/* Background Effects */}
       <div className="absolute inset-0 cyber-grid opacity-5" />
       <div
@@ -299,8 +299,8 @@ export default function SkillsSection() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon">Skills I Tech </h2>
-          <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">Skills I Tech </h2>
+          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
             Matriks teknologi yang dikuasai dalam ranah digital
           </p>
 
@@ -329,9 +329,9 @@ export default function SkillsSection() {
 
         {/* Skills Grid */}
         <div 
-          className="grid gap-6 max-w-6xl mx-auto"
+          className="grid gap-4 sm:gap-6 max-w-6xl mx-auto px-2 sm:px-4"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
           }}
         >
           {skills.map((skill) => (
@@ -403,7 +403,15 @@ export default function SkillsSection() {
             <button 
               onClick={() => {
                 const contactSection = document.getElementById('contact')
-                contactSection?.scrollIntoView({ behavior: 'smooth' })
+                if (contactSection) {
+                  const offset = window.innerWidth < 640 ? 60 : 80
+                  const elementPosition = contactSection.getBoundingClientRect().top
+                  const offsetPosition = elementPosition + window.pageYOffset - offset
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  })
+                }
               }}
               className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-green)] border-2 border-[var(--neon-green)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-green)]"
             >

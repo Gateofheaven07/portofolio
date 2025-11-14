@@ -50,6 +50,9 @@ function ProjectCard({ project }: { project: Project }) {
     if (!card) return
 
     const handleMouseMove = (e: MouseEvent) => {
+      // Disable 3D effect on mobile to prevent scroll issues
+      if (window.innerWidth < 768) return
+      
       const rect = card.getBoundingClientRect()
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
@@ -92,6 +95,7 @@ function ProjectCard({ project }: { project: Project }) {
         backdropFilter: "blur(10px)",
         border: "1px solid rgba(0, 191, 255, 0.2)",
         boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 191, 255, 0.1)",
+        touchAction: "pan-y",
       }}
     >
       {/* Project Image */}
@@ -205,7 +209,7 @@ export default function ProjectsSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="projects" className="min-h-screen py-20 px-4 relative">
+    <section ref={sectionRef} id="projects" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full" style={{ touchAction: 'pan-y' }}>
       {/* Background Effects */}
       <div className="absolute inset-0 cyber-grid opacity-5" />
       <div
@@ -220,11 +224,11 @@ export default function ProjectsSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon">Projects & Achievements</h2>
-          <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">Projects & Achievements</h2>
+          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
           Temukan perjalanan saya dalam mengubah ide menjadi pengalaman digital yang bermakna.
           </p>
 
@@ -237,7 +241,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
           {projects.map((project, index) => (
             <div
               key={project.id}
