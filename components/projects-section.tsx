@@ -33,12 +33,12 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: "Aplikasi To Do List Sederhana",
-    description: "Aplikasi To-Do List ini memudahkan pengguna mencatat, mengatur, dan mengelola tugas harian. Dilengkapi fitur tambah tugas, penjadwalan, deskripsi, serta mode gelap untuk tampilan yang lebih nyaman.",
-    tech: ["Html", "Css", "Java Script"],
-    image: "/To-Do List.png",
-    demoUrl: "https://revou-coding-camp.github.io/codingcamp-21-jul-25-Gateofheaven07/",
-    githubUrl: "https://github.com/Revou-Coding-Camp/codingcamp-21-jul-25-Gateofheaven07",
+    title: "AI Background Remover",
+    description: "Website berbasis AI yang dapat menghapus background gambar secara instan dengan hasil presisi tinggi. Pengguna cukup mengunggah foto dan background akan diproses otomatis dalam hitungan detik.",
+    tech: ["TypeScript", "Nextjs", "Tailwind CSS"],
+    image: "/bg_removal.png",
+    demoUrl: "https://bg-removal-three-mu.vercel.app/",
+    githubUrl: "https://github.com/Gateofheaven07/bg-removal",
   },
 ]
 
