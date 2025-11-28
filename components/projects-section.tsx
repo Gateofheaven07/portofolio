@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface Project {
   id: number
@@ -39,6 +39,14 @@ const projects: Project[] = [
     image: "/bg_removal.png",
     demoUrl: "https://bg-removal-three-mu.vercel.app/",
     githubUrl: "https://github.com/Gateofheaven07/bg-removal",
+  },
+  {
+    id: 4,
+    title: "Portal Berita Jabodetabek",
+    description: "J.comNews adalah portal berita terpercaya untuk wilayah Jabodetabek yang menyediakan informasi terkini dan berkualitas. Website ini menampilkan berita utama, gaya hidup, kesehatan, dan politik & hukum dengan antarmuka yang modern dan responsif.",
+    tech: ["Next.js", "React", "TypeScript"],
+    image: "/jcomnews.png",
+    demoUrl: "https://portal-berita-flame.vercel.app/",
   },
 ]
 
@@ -150,7 +158,7 @@ function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="flex-1 py-2 px-4 font-orbitron text-sm border border-[var(--neon-cyan)] text-[var(--neon-cyan)] rounded-lg hover:bg-[var(--neon-cyan)] hover:text-black transition-all duration-300 hover:shadow-[0_0_15px_var(--neon-cyan)] text-center"
             >
-              Live Demo
+              Visit Website
             </a>
           )}
           {project.githubUrl && (
@@ -183,6 +191,10 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const [showAllProjects, setShowAllProjects] = useState(false)
+
+  // Tentukan project yang akan ditampilkan
+  const displayedProjects = showAllProjects ? projects : projects.slice(0, 3)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -206,7 +218,7 @@ export default function ProjectsSection() {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [showAllProjects])
 
   return (
     <section ref={sectionRef} id="projects" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full" style={{ touchAction: 'pan-y' }}>
@@ -242,7 +254,7 @@ export default function ProjectsSection() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
-          {projects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <div
               key={project.id}
               className="project-card opacity-0 transform translate-y-8 transition-all duration-700 flex"
@@ -254,15 +266,20 @@ export default function ProjectsSection() {
         </div>
 
         {/* View More Button */}
-        <div className="text-center mt-16">
-          <button className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-green)] border-2 border-[var(--neon-green)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-green)]">
-            <div className="absolute inset-0 bg-[var(--neon-green)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></div>
-            <span className="relative z-10 flex items-center gap-2">
-              View All Projects
-              <span className="text-xl">→</span>
-            </span>
-          </button>
-        </div>
+        {projects.length > 3 && (
+          <div className="text-center mt-16">
+            <button 
+              onClick={() => setShowAllProjects(!showAllProjects)}
+              className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-green)] border-2 border-[var(--neon-green)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-green)]"
+            >
+              <div className="absolute inset-0 bg-[var(--neon-green)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></div>
+              <span className="relative z-10 flex items-center gap-2">
+                {showAllProjects ? "View Less" : "View All Projects"}
+                <span className="text-xl">{showAllProjects ? "↑" : "→"}</span>
+              </span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )
