@@ -45,7 +45,7 @@ const projects: Project[] = [
     title: "Portal Berita Jabodetabek",
     description: "J.comNews adalah portal berita terpercaya untuk wilayah Jabodetabek yang menyediakan informasi terkini dan berkualitas. Website ini menampilkan berita utama, gaya hidup, kesehatan, dan politik & hukum dengan antarmuka yang modern dan responsif.",
     tech: ["Next.js", "React", "TypeScript"],
-    image: "/jcomnews.png",
+    image: "/jcomnews2.png",
     demoUrl: "https://portal-berita-flame.vercel.app/",
   },
 ]
