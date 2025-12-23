@@ -97,7 +97,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden overflow-x-hidden w-full max-w-full bg-gradient-to-br from-teal-900 via-slate-900 to-slate-800"
+      className="relative min-h-screen overflow-hidden overflow-x-hidden w-full max-w-full bg-gradient-to-br from-teal-900 via-slate-900 to-slate-900"
       style={{
         perspective: "1000px",
         transformStyle: "preserve-3d"
