@@ -48,6 +48,16 @@ const achievements: Achievement[] = [
   {
     id: 4,
     year: "2025",
+    title: "Analisis Sentimen Kebijakan Penempatan Dana 200T Di Bank Bumn Menggunakan Algoritma Support Vector Machine",
+    organization: "Jurnal FKPT",
+    description: "Jurnal publikasi mengenai Analisis Sentimen Kebijakan Penempatan Dana 200T Di Bank Bumn Menggunakan Algoritma Support Vector Machine.",
+    type: "award",
+    certificate: "/sertifikat/My Journal.pdf",
+    skills: ["Machine Learning", "SVM", "Sentiment Analysis"],
+  },
+  {
+    id: 5,
+    year: "2025",
     title: "CCNA: Introduction to Networks",
     organization: "Cisco Networking Academy",
     description: "Sertifikat penyelesaian kursus CCNA – Introduction to Networks, Cisco Networking Academy.",
@@ -56,7 +66,7 @@ const achievements: Achievement[] = [
     skills: ["Networking", "Cisco Packet Tracer"],
   },
   {
-    id: 5,
+    id: 6,
     year: "2023",
     title: "Profesional Programmer With Golang",
     organization: "Universitas Bina Sarana Informatika",
@@ -66,7 +76,7 @@ const achievements: Achievement[] = [
     skills: ["Golang"],
   },
   {
-    id: 6,
+    id: 7,
     year: "2024",
     title: "Programming Untuk Pengembangan Aplikasi AI",
     organization: "Universitas Bina Sarana Informatika",

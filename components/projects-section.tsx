@@ -10,6 +10,7 @@ interface Project {
   image: string
   demoUrl?: string
   githubUrl?: string
+  buttonText?: string
 }
 
 const projects: Project[] = [
@@ -47,6 +48,15 @@ const projects: Project[] = [
     tech: ["Next.js", "React", "TypeScript"],
     image: "/jcomnews2.png",
     demoUrl: "https://portal-berita-flame.vercel.app/",
+  },
+  {
+    id: 5,
+    title: "Analisis Sentimen Kebijakan Penempatan Dana 200T Di Bank Bumn Menggunakan Algoritma Support Vector Machine",
+    description: "Jurnal publikasi mengenai Analisis Sentimen Kebijakan Penempatan Dana 200T Di Bank Bumn Menggunakan Algoritma Support Vector Machine. Penelitian ini menerapkan metode SVM untuk mengklasifikasi sentimen masyarakat terhadap kebijakan pemerintah.",
+    tech: ["Machine Learning", "SVM", "Python", "Sentiment Analysis"],
+    image: "/jurnal.png",
+    demoUrl: "https://journal.fkpt.org/index.php/comforch/article/view/2329/1049",
+    buttonText: "Visit Journal",
   },
 ]
 
@@ -158,7 +168,7 @@ function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="flex-1 py-2 px-4 font-orbitron text-sm border border-[var(--neon-cyan)] text-[var(--neon-cyan)] rounded-lg hover:bg-[var(--neon-cyan)] hover:text-black transition-all duration-300 hover:shadow-[0_0_15px_var(--neon-cyan)] text-center"
             >
-              Visit Website
+              {project.buttonText || "Visit Website"}
             </a>
           )}
           {project.githubUrl && (
