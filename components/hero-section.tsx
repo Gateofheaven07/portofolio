@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import ProfileCard from "./profile-card"
+import RocketAnimation from "./rocket-animation"
 
 export default function HeroSection() {
   const particlesRef = useRef<HTMLDivElement>(null)
@@ -105,6 +106,9 @@ export default function HeroSection() {
     >
       {/* Digital Rain Background */}
       <div ref={particlesRef} className="absolute inset-0 pointer-events-none z-0" />
+
+      {/* Rocket Animation */}
+      <RocketAnimation />
 
       {/* Profile Card positioned at top right for desktop */}
       <div className="absolute top-24 right-4 sm:right-8 md:right-12 lg:right-16 xl:right-20 z-20 hidden lg:block">

@@ -42,13 +42,13 @@ export default function ProfileCard() {
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[50px] scale-110"
         style={{
-          background: `radial-gradient(circle, rgba(59, 130, 246, 0.8), rgba(147, 197, 253, 0.4), transparent)`,
+          background: `radial-gradient(circle, rgba(57, 255, 20, 0.8), rgba(134, 239, 172, 0.4), transparent)`,
         }}
       />
 
       <div
         ref={cardRef}
-        className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-6 w-64 sm:w-72 h-[400px] sm:h-[450px] flex flex-col items-center justify-between transition-all duration-300 ease-out group-hover:shadow-[0_0_50px_rgba(59,130,246,0.5)]"
+        className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-6 w-64 sm:w-72 h-[400px] sm:h-[450px] flex flex-col items-center justify-between transition-all duration-300 ease-out group-hover:shadow-[0_0_50px_rgba(57,255,20,0.5)]"
         style={{
           transformStyle: "preserve-3d",
           background: "rgba(15, 23, 42, 0.95)",
@@ -61,7 +61,7 @@ export default function ProfileCard() {
         <div className="flex flex-col items-center space-y-4 sm:space-y-6 pt-4 sm:pt-6" style={{ transform: "translateZ(30px)" }}>
           {/* Profile Image */}
           <div className="relative w-28 h-28 sm:w-32 sm:h-32">
-            <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-900 via-purple-900 to-slate-800 overflow-hidden">
+            <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-gradient-to-br from-green-900 via-purple-900 to-slate-800 overflow-hidden">
               <Image
                 src="/taufiik foto.jpeg"
                 alt="Taufik Ramlan"
