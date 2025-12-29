@@ -609,8 +609,17 @@
 }
 
 /* Rocket Launch Animation */
-/* Rocket Launch Animation - Diagonal Bottom-Left to Top-Right */
-/* Rocket Launch Animation - Diagonal Bottom-Left to Top-Right (Shifted Left) */
+/* Rocket Flight Classes */
+.rocket-flight {
+  animation: rocket-fly-diagonal var(--flight-duration, 7000ms) linear forwards;
+}
+
+@media (max-width: 768px) {
+  .rocket-flight {
+    animation-name: rocket-fly-mobile;
+  }
+}
+
 @keyframes rocket-fly-diagonal {
   0% {
     transform: translate(-10vw, 110vh) rotate(45deg);
@@ -624,6 +633,23 @@
   }
   100% {
     transform: translate(60vw, -20vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rocket-fly-mobile {
+  0% {
+    transform: translate(-20px, 100vh) rotate(45deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100vw, -10vh) rotate(45deg);
     opacity: 0;
   }
 }

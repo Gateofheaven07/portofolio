@@ -42,17 +42,17 @@ export default function RocketAnimation() {
       className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
     >
       <div 
-        className="absolute top-0 left-0 w-full h-full"
+        className="rocket-flight absolute top-0 left-0 w-full h-full"
         style={{
-          animation: `rocket-fly-diagonal ${floatDuration}ms linear forwards`,
-        }}
+          '--flight-duration': `${floatDuration}ms`,
+        } as React.CSSProperties}
       >
         {/* Inner container with counter-rotation for correct emoji orientation */}
         <div 
           className="relative transform -rotate-45"
         > 
           {/* Smoke Trail */}
-          <div className="absolute top-20 left-0 w-full flex justify-center items-center -z-10">
+          <div className="absolute top-14 md:top-20 left-0 w-full flex justify-center items-center -z-10">
              {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
@@ -78,7 +78,7 @@ export default function RocketAnimation() {
           </div>
 
           {/* Rocket Emoji with Opacity */}
-          <span className="text-8xl filter drop-shadow-xl block opacity-70" role="img" aria-label="rocket">
+          <span className="text-6xl md:text-8xl filter drop-shadow-xl block opacity-70" role="img" aria-label="rocket">
             🚀
           </span>
         </div>

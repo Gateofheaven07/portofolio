@@ -58,6 +58,15 @@ const projects: Project[] = [
     demoUrl: "https://journal.fkpt.org/index.php/comforch/article/view/2329/1049",
     buttonText: "Visit Journal",
   },
+  {
+    id: 6,
+    title: "Weather App",
+    description: "Aplikasi ramalan cuaca interaktif yang menyajikan data cuaca real-time dengan antarmuka yang bersih dan mudah digunakan. Mendukung pencarian lokasi global dan menampilkan detail seperti suhu, kelembaban, dan prakiraan cuaca.",
+    tech: ["React", "TypeScript", "Tailwind CSS"],
+    image: "/weather app.png",
+    demoUrl: "https://weather-app-gold-seven-46.vercel.app/",
+    githubUrl: "https://github.com/Gateofheaven07/Weather-app",
+  },
 ]
 
 function ProjectCard({ project }: { project: Project }) {
