@@ -67,6 +67,15 @@ const projects: Project[] = [
     demoUrl: "https://weather-app-gold-seven-46.vercel.app/",
     githubUrl: "https://github.com/Gateofheaven07/Weather-app",
   },
+  {
+    id: 7,
+    title: "Aplikasi Kalkulator HPP",
+    description: "Aplikasi sederhana dan efisien untuk menghitung Harga Pokok Penjualan (HPP). Membantu pengguna menentukan biaya produksi dan harga jual dengan akurat.",
+    tech: ["Next.js", "React", "TypeScript"],
+    image: "/calc-app.png",
+    demoUrl: "https://calculator-hpp.vercel.app/",
+    githubUrl: "https://github.com/Gateofheaven07/calculator-hpp",
+  },
 ]
 
 function ProjectCard({ project }: { project: Project }) {
