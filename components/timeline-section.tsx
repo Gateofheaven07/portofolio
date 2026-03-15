@@ -85,6 +85,16 @@ const achievements: Achievement[] = [
     certificate: "/sertifikat/SertifikatDigitalmhs_20251014_081724.pdf",
     skills: ["Python"],
   },
+  {
+    id: 8,
+    year: "2026",
+    title: "Analisis Sentimen Kontaminasi Radioaktif Di Kawasan Industri Cikande Menggunakan Algoritma Support Vector Machine",
+    organization: "Jurnal Informatika Terpadu",
+    description: "Jurnal publikasi mengenai Analisis Sentimen Kontaminasi Radioaktif Di Kawasan Industri Cikande Menggunakan Algoritma Support Vector Machine.",
+    type: "award",
+    certificate: "/sertifikat/Jurnal2.pdf",
+    skills: ["Machine Learning", "SVM", "Python", "Sentiment Analysis"],
+  },
 ]
 
 function Modal({

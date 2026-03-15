@@ -10,6 +10,7 @@ interface Project {
   image: string
   demoUrl?: string
   githubUrl?: string
+  pdfUrl?: string
   buttonText?: string
 }
 
@@ -75,6 +76,16 @@ const projects: Project[] = [
     image: "/calc-app.png",
     demoUrl: "https://calculator-hpp.vercel.app/",
     githubUrl: "https://github.com/Gateofheaven07/calculator-hpp",
+  },
+  {
+    id: 8,
+    title: "Analisis Sentimen Kontaminasi Radioaktif Di Kawasan Industri Cikande Menggunakan Algoritma Support Vector Machine",
+    description: "Jurnal publikasi mengenai Analisis Sentimen Kontaminasi Radioaktif Di Kawasan Industri Cikande Menggunakan Algoritma Support Vector Machine. Penelitian ini menerapkan metode SVM untuk mengklasifikasi sentimen masyarakat di platform TikTok.",
+    tech: ["Machine Learning", "SVM", "Python", "Sentiment Analysis"],
+    image: "/Jurnals2.png",
+    demoUrl: "https://journal.nurulfikri.ac.id/index.php/JIT/article/view/2694/466",
+    pdfUrl: "/sertifikat/Jurnal2.pdf",
+    buttonText: "Visit Journal",
   },
 ]
 
@@ -187,6 +198,16 @@ function ProjectCard({ project }: { project: Project }) {
               className="flex-1 py-2 px-4 font-orbitron text-sm border border-[var(--neon-cyan)] text-[var(--neon-cyan)] rounded-lg hover:bg-[var(--neon-cyan)] hover:text-black transition-all duration-300 hover:shadow-[0_0_15px_var(--neon-cyan)] text-center"
             >
               {project.buttonText || "Visit Website"}
+            </a>
+          )}
+          {project.pdfUrl && (
+            <a
+              href={project.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-2 px-4 font-orbitron text-sm border border-[var(--neon-green)] text-[var(--neon-green)] rounded-lg hover:bg-[var(--neon-green)] hover:text-black transition-all duration-300 hover:shadow-[0_0_15px_var(--neon-green)] text-center"
+            >
+              View PDF
             </a>
           )}
           {project.githubUrl && (
