@@ -16,6 +16,14 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 9,
+    title: "Drama Cina Flix",
+    description: "Website streaming untuk menonton berbagai video drama China dengan antarmuka yang modern, responsif, dan mudah digunakan.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    image: "/web_dracin.png",
+    demoUrl: "https://drama-cina-flix.vercel.app/",
+  },
+  {
     id: 1,
     title: "Sistem Informasi Kost Berbasis Web",
     description: "AKA Kost adalah website pencarian kamar kost dengan tampilan modern dan responsif, yang memudahkan pengguna menemukan kamar lengkap dengan detail fasilitas, harga, dan ketersediaan secara cepat dan praktis.",
