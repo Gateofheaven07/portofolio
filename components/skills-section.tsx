@@ -163,49 +163,16 @@ function Tooltip({
 }
 
 function SkillCard({ skill }: { skill: Skill }) {
-  const [isHovered, setIsHovered] = useState(false)
-
   return (
-    <div
-      className="flex flex-col items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        background: "rgba(30, 41, 59, 0.95)",
-        border: "1px solid rgba(148, 163, 184, 0.2)",
-        padding: "2rem",
-        minHeight: "200px",
-        boxShadow: isHovered ? "0 8px 32px rgba(0, 0, 0, 0.5)" : "0 4px 16px rgba(0, 0, 0, 0.3)",
-      }}
-    >
-      <div 
-        className="flex items-center justify-center mb-4"
-        style={{
-          width: "120px",
-          height: "120px",
-          minWidth: "120px",
-          minHeight: "120px",
-        }}
-      >
+    <div className="group flex flex-col items-center justify-center w-full aspect-square rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer bg-slate-900/40 backdrop-blur-md border border-white/10 hover:bg-slate-800/60 shadow-lg hover:shadow-2xl">
+      <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex flex-1 items-center justify-center mb-3">
         <img 
           src={skill.imageSrc} 
           alt={skill.name} 
-          style={{ 
-            objectFit: 'contain',
-            width: '120px',
-            height: '120px',
-            maxWidth: '120px',
-            maxHeight: '120px',
-          }}
+          className="object-contain w-full h-full drop-shadow-md group-hover:drop-shadow-xl transition-transform duration-300 group-hover:scale-110"
         />
       </div>
-      <div 
-        className="text-white font-sans text-center"
-        style={{
-          fontSize: "16px",
-          fontWeight: "500",
-        }}
-      >
+      <div className="text-gray-200 font-sans text-sm sm:text-base font-medium text-center w-full">
         {skill.name}
       </div>
     </div>
@@ -234,7 +201,7 @@ export default function SkillsSection() {
   }
 
   return (
-    <section ref={sectionRef} id="skills" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-hidden overflow-x-hidden w-full max-w-full">
+    <section ref={sectionRef} id="skills" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-hidden overflow-x-hidden w-full max-w-full will-change-transform">
       {/* Background Effects */}
       <div className="absolute inset-0 cyber-grid opacity-5" />
       <div
@@ -280,12 +247,7 @@ export default function SkillsSection() {
         </div>
 
         {/* Skills Grid */}
-        <div 
-          className="grid gap-4 sm:gap-6 max-w-6xl mx-auto px-2 sm:px-4"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-          }}
-        >
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 max-w-6xl mx-auto px-4">
           {skills.map((skill) => (
             <SkillCard key={skill.id} skill={skill} />
           ))}

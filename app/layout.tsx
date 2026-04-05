@@ -29,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${orbitron.variable}`}>
-      <body className={`${orbitron.variable} antialiased overflow-x-hidden max-w-full`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${orbitron.variable} scroll-smooth`} style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}>
+      <body className={`${orbitron.variable} antialiased overflow-x-hidden max-w-full`} style={{ WebkitOverflowScrolling: 'touch' }}>
         <StarsBackground />
         {children}
       </body>

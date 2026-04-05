@@ -3,86 +3,110 @@
 import { useEffect, useState } from "react"
 
 export default function RocketAnimation() {
-  const [isFlying, setIsFlying] = useState(false)
+  const [particles, setParticles] = useState<Array<{ id: number; size: number; left: number }>>([])
+  const [isHovered, setIsHovered] = useState(false)
 
-  // Configuration
-  const floatDuration = 6500 // 7s flight
-  const pauseDuration = 3000 // 3s pause
-  const cycleTime = floatDuration + pauseDuration
-
+  // Particle generator
   useEffect(() => {
-    // Initial start
-    const startTimeout = setTimeout(() => {
-      setIsFlying(true)
-    }, 1000)
+    let idCounter = 0
+    const interval = setInterval(() => {
+      setParticles(current => {
+        // Add new particle
+        const newParticle = {
+          id: idCounter++,
+          size: Math.random() * 15 + 10,
+          left: Math.random() * 20 - 10, // random spread
+        }
+        
+        // Keep max 20 particles to avoid memory issues
+        const updated = [...current, newParticle].slice(-20)
+        return updated
+      })
+    }, 150) // spawn rate
 
-    return () => clearTimeout(startTimeout)
+    return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    if (!isFlying) return
-
-    const stopFlightTimeout = setTimeout(() => {
-      setIsFlying(false)
-      
-      const startNextFlightTimeout = setTimeout(() => {
-        setIsFlying(true)
-      }, pauseDuration)
-      
-      return () => clearTimeout(startNextFlightTimeout)
-    }, floatDuration)
-
-    return () => clearTimeout(stopFlightTimeout)
-  }, [isFlying, floatDuration, pauseDuration])
-
-  if (!isFlying) return null
-
   return (
-    <div 
-      className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
-    >
+    <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden flex items-center justify-center lg:justify-end lg:pr-[20vw]">
+      {/* Container for positioned rocket */}
       <div 
-        className="rocket-flight absolute top-0 left-0 w-full h-full"
+        className={`pointer-events-auto relative transition-transform duration-300 ease-out cursor-pointer ${isHovered ? 'scale-110' : 'scale-100'}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         style={{
-          '--flight-duration': `${floatDuration}ms`,
-        } as React.CSSProperties}
+          animation: isHovered 
+            ? 'rocket-vibrate 0.1s linear infinite' 
+            : 'rocket-float 4s ease-in-out infinite',
+        }}
       >
-        {/* Inner container with counter-rotation for correct emoji orientation */}
-        <div 
-          className="relative transform -rotate-45"
-        > 
-          {/* Smoke Trail */}
-          <div className="absolute top-14 md:top-20 left-0 w-full flex justify-center items-center -z-10">
-             {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute bg-gray-400 rounded-full opacity-0 blur-md"
-                  style={{
-                    width: `${20 + Math.random() * 20}px`,
-                    height: `${20 + Math.random() * 20}px`,
-                    top: `${Math.random() * 20}px`,
-                    left: `${Math.random() * 10 - 20}px`, // Slight random left offset
-                    animation: `smoke-trail 1s ease-out infinite`,
-                    animationDelay: `${i * 0.2}s`
-                  }}
-                />
-             ))}
-             {/* Longer flowing trail */}
-             <div 
-                className="absolute top-10 w-2 h-32 bg-gradient-to-t from-transparent via-gray-300 to-transparent blur-sm opacity-50" 
-                style={{ 
-                   transform: 'rotate(45deg) translate(-20px, 20px)',
-                   transformOrigin: 'top center' 
-                }}
-             />
-          </div>
-
-          {/* Rocket Emoji with Opacity */}
-          <span className="text-6xl md:text-8xl filter drop-shadow-xl block opacity-70" role="img" aria-label="rocket">
+        <div className="relative transform -rotate-45 flex flex-col items-center">
+          
+          {/* Rocket Emoji */}
+          <span 
+            className="text-6xl md:text-8xl filter drop-shadow-xl block relative z-20" 
+            role="img" 
+            aria-label="rocket"
+          >
             🚀
           </span>
+
+          {/* Glowing Engine pulsing effect */}
+          <div className="absolute bottom-4 z-10 w-8 h-8 rounded-full bg-orange-500 opacity-50 blur-xl animate-pulse"></div>
+
+          {/* Engine Exhaust Particles */}
+          <div className="absolute top-[80%] left-1/2 -translate-x-1/2 w-full flex justify-center -z-10">
+            {isHovered && (
+              <div className="absolute top-0 w-6 h-16 bg-gradient-to-b from-orange-500 via-yellow-400 to-transparent blur-md opacity-80 animate-pulse rounded-full z-0"></div>
+            )}
+            
+            {/* Trail / Smoke system */}
+            {particles.map(p => (
+              <div
+                key={p.id}
+                className="absolute rounded-full"
+                style={{
+                  width: `${p.size}px`,
+                  height: `${p.size}px`,
+                  left: `calc(50% + ${p.left}px - ${p.size/2}px)`,
+                  background: isHovered ? 'radial-gradient(circle, rgba(255,165,0,0.8) 0%, rgba(255,69,0,0) 70%)' : 'radial-gradient(circle, rgba(156,163,175,0.6) 0%, rgba(107,114,128,0) 70%)',
+                  animation: `smoke-fade ${isHovered ? '0.8s' : '1.5s'} ease-out forwards`,
+                }}
+              />
+            ))}
+          </div>
+
         </div>
       </div>
+      
+      {/* Internal Styles for Keyframes */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes rocket-float {
+          0%, 100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(5deg);
+          }
+        }
+        @keyframes rocket-vibrate {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(-2px, -2px) rotate(-2deg); }
+          50% { transform: translate(2px, -2px) rotate(2deg); }
+          75% { transform: translate(-2px, 2px) rotate(-1deg); }
+          100% { transform: translate(2px, 2px) rotate(1deg); }
+        }
+        @keyframes smoke-fade {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(80px) scale(3);
+            opacity: 0;
+          }
+        }
+      `}} />
     </div>
   )
 }
