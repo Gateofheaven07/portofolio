@@ -30,7 +30,7 @@ export default function ScrollProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-[999] h-[3px] pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-[999] h-[3px] pointer-events-none hidden sm:block"
       aria-hidden="true"
     >
       {/* Track */}

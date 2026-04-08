@@ -14,7 +14,7 @@ export default function StarsBackground() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  // ─── Static stars ───────────────────────────────────────────────────────────
+  // ─── Static stars ────────────────────────────────────────────────────
   useEffect(() => {
     const starsContainer = starsRef.current
     if (!starsContainer) return
@@ -46,29 +46,47 @@ export default function StarsBackground() {
       star.style.left = left + "%"
       star.style.top = top + "%"
       star.style.opacity = baseOpacity.toString()
-      star.style.transform = `translateZ(${depth}px)`
-      star.style.animation = `twinkle ${twinkleSpeed}s ease-in-out infinite`
+      // Di mobile: tanpa 3D transform dan tanpa animasi twinkle untuk performa terbaik
+      if (!isMobile) {
+        star.style.transform = `translateZ(${depth}px)`
+        star.style.animation = `twinkle ${twinkleSpeed}s ease-in-out infinite`
+      }
       const shadowOpacity = isMobile ? baseOpacity * 0.3 : baseOpacity * 0.5
       star.style.boxShadow = `0 0 ${size * 1.5}px rgba(255,255,255,${shadowOpacity})`
 
       starsContainer.appendChild(star)
-      setTimeout(() => {
-        if (starsContainer.contains(star)) starsContainer.removeChild(star)
-      }, 30000)
+      // Di mobile tidak perlu recycle karena jumlah kecil dan statik
+      if (!isMobile) {
+        setTimeout(() => {
+          if (starsContainer.contains(star)) starsContainer.removeChild(star)
+        }, 30000)
+      }
     }
 
-    for (let i = 0; i < 200; i++) setTimeout(createStar, i * 80)
-    const iv = setInterval(createStar, 1500)
-    return () => clearInterval(iv)
+    // Mobile: 30 bintang statik saja, Desktop: 200 bintang animasi
+    const count = isMobile ? 30 : 200
+    for (let i = 0; i < count; i++) {
+      if (isMobile) {
+        createStar()  // langsung, tanpa stagger timeout
+      } else {
+        setTimeout(createStar, i * 80)
+      }
+    }
+    if (!isMobile) {
+      const iv = setInterval(createStar, 1500)
+      return () => clearInterval(iv)
+    }
   }, [isMobile])
 
-  // ─── Shooting stars (DOM-based, zero React re-render) ───────────────────────
+  // ─── Shooting stars (DOM-based, zero React re-render) ──────────────────
   useEffect(() => {
+    // Dinonaktifkan di mobile untuk memaksimalkan performa scroll
+    if (isMobile) return
+
     const container = starsRef.current
     if (!container) return
 
-    // Max aktif: 2 desktop, 1 mobile
-    const MAX_ACTIVE = isMobile ? 1 : 2
+    const MAX_ACTIVE = 2
     let activeCount = 0
 
     function spawnShootingStar() {
@@ -77,15 +95,13 @@ export default function StarsBackground() {
 
       const star = document.createElement("div")
 
-      // Random start — spread di seluruh lebar, mulai di atas viewport
-      const startX    = 5 + Math.random() * 90        // 5–95 vw
-      const startY    = -15 + Math.random() * 10      // -15 hingga -5 vh (di atas layar)
-      const travelY   = 130                           // vh — jatuh hingga bawah layar
-      const duration  = (isMobile ? 6 : 5) + Math.random() * 4  // 5–9s lebih lambat
-      const tailLen   = isMobile ? 70 + Math.random() * 50 : 100 + Math.random() * 80
+      const startX    = 5 + Math.random() * 90
+      const startY    = -15 + Math.random() * 10
+      const travelY   = 130
+      const duration  = 5 + Math.random() * 4
+      const tailLen   = 100 + Math.random() * 80
       const opacity   = 0.5 + Math.random() * 0.35
 
-      // Container
       star.style.cssText = `
         position: absolute;
         left: ${startX}vw;
@@ -96,7 +112,6 @@ export default function StarsBackground() {
         z-index: 15;
       `
 
-      // Tail — vertikal (lebar 2px, tinggi = tailLen, gradient atas→bawah)
       const tail = document.createElement("div")
       tail.style.cssText = `
         width: 2px;
@@ -113,7 +128,6 @@ export default function StarsBackground() {
         box-shadow: 0 0 5px 1px rgba(0,191,255,0.3);
       `
 
-      // Head glow — di bagian bawah tail
       const head = document.createElement("div")
       head.style.cssText = `
         position: absolute;
@@ -135,45 +149,33 @@ export default function StarsBackground() {
       if (!starsRef.current) { activeCount--; return }
       starsRef.current.appendChild(star)
 
-      // Animasi vertikal — hanya translateY
       const anim = star.animate(
         [
-          { opacity: 0,            transform: "translateY(0)" },
-          { opacity: opacity,      transform: `translateY(${travelY * 0.05}vh)`, offset: 0.05 },
+          { opacity: 0,             transform: "translateY(0)" },
+          { opacity: opacity,       transform: `translateY(${travelY * 0.05}vh)`, offset: 0.05 },
           { opacity: opacity * 0.4, transform: `translateY(${travelY * 0.90}vh)`, offset: 0.90 },
-          { opacity: 0,            transform: `translateY(${travelY}vh)` },
+          { opacity: 0,             transform: `translateY(${travelY}vh)` },
         ],
-        {
-          duration: duration * 1000,
-          easing: "linear",
-          fill: "forwards",
-        }
+        { duration: duration * 1000, easing: "linear", fill: "forwards" }
       )
 
       const cleanup = () => {
         const c = starsRef.current
         if (c && c.contains(star)) c.removeChild(star)
         activeCount--
-        // Respawn dengan delay lebih panjang agar terasa cinematic
-        const delay = isMobile
-          ? 3000 + Math.random() * 5000   // 3–8s mobile
-          : 1500 + Math.random() * 3500   // 1.5–5s desktop
-        setTimeout(spawnShootingStar, delay)
+        setTimeout(spawnShootingStar, 1500 + Math.random() * 3500)
       }
 
       anim.onfinish = cleanup
       anim.oncancel = cleanup
     }
 
-    // Initial staggered spawns — jangan serentak
-    const initialDelay = isMobile ? 2000 : 800
-    const t1 = setTimeout(spawnShootingStar, initialDelay)
-    const t2 = !isMobile ? setTimeout(spawnShootingStar, initialDelay + 2000) : undefined
+    const t1 = setTimeout(spawnShootingStar, 800)
+    const t2 = setTimeout(spawnShootingStar, 2800)
 
     return () => {
       clearTimeout(t1)
-      if (t2 !== undefined) clearTimeout(t2)
-      // Cancel all running animations on unmount
+      clearTimeout(t2)
       container.querySelectorAll("[data-shooting-star]").forEach(el => el.remove())
     }
   }, [isMobile])
@@ -183,8 +185,11 @@ export default function StarsBackground() {
       ref={starsRef}
       className="fixed inset-0 pointer-events-none z-10 transition-opacity"
       style={{
-        transformStyle: "preserve-3d",
-        perspective: "1000px",
+        // Di mobile: tanpa 3D perspective untuk menghilangkan GPU composite layer yang berat
+        ...(isMobile ? {} : {
+          transformStyle: "preserve-3d" as const,
+          perspective: "1000px",
+        }),
         opacity: isLoaded ? (isMobile ? 0.6 : 1) : (isMobile ? 0.2 : 0.3),
         transitionDuration: "2000ms",
       }}

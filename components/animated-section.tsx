@@ -120,7 +120,7 @@ export function AnimatedSection({
     transition: isVisible
       ? `opacity ${duration}ms ${easingFn} ${delay}ms, transform ${duration}ms ${easingFn} ${delay}ms`
       : "none",
-    willChange: "opacity, transform",
+    // willChange dihapus agar tidak membuat composite layer permanen di mobile
     ...style,
   }
 

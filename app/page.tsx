@@ -163,8 +163,10 @@ export default function Home() {
     setTimeout(() => setContentVisible(true), 80)
   }, [])
 
-  // Custom cursor
+  // Custom cursor — hanya desktop (touch device tidak punya cursor)
   useEffect(() => {
+    if (window.innerWidth <= 640) return  // skip on mobile
+
     const cursor = cursorRef.current
     const cursorDot = cursorDotRef.current
     if (!cursor || !cursorDot) return
@@ -251,9 +253,9 @@ export default function Home() {
 
         {/* Shooting stars are rendered inside StarsBackground (stars-background.tsx) */}
 
-        {/* Scanlines */}
+        {/* Scanlines — disembunyikan di mobile untuk performa scroll */}
         <div
-          className="fixed inset-0 pointer-events-none z-40 opacity-5"
+          className="fixed inset-0 pointer-events-none z-40 opacity-5 hidden sm:block"
           style={{
             backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,191,255,0.1) 2px, rgba(0,191,255,0.1) 4px)`,
             animation: "scanlines 20s linear infinite",

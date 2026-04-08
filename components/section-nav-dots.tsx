@@ -80,7 +80,9 @@ export default function SectionNavDots() {
         gap:        "14px",
         opacity:    visible ? 1 : 0,
         transition: "opacity 0.5s ease, transform 0.5s ease",
+        // Sembunyikan di mobile — ditangani oleh CSS class di bawah
       }}
+      className="section-nav-dots-container"
     >
       {SECTIONS.map(({ id }) => {
         const isActive = active === id
@@ -150,6 +152,12 @@ export default function SectionNavDots() {
         @keyframes dot-ripple {
           0%   { transform: scale(0.5); opacity: 0.9; }
           100% { transform: scale(2);   opacity: 0;   }
+        }
+        /* Sembunyikan nav dots di mobile agar tidak mengganggu scroll */
+        @media (max-width: 640px) {
+          .section-nav-dots-container {
+            display: none !important;
+          }
         }
       `}</style>
     </nav>

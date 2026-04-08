@@ -811,6 +811,27 @@ section {
     -webkit-overflow-scrolling: touch;
   }
 
+  /* Smooth scroll alami di mobile */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Agar scroll tidak ter-block oleh elemen fixed */
+  body {
+    overscroll-behavior-y: auto;
+  }
+
+  /* Matikan will-change di mobile — mencegah pembuatan GPU composite layer
+     yang berlebihan dan menjadi penyebab utama scroll berat di mobile */
+  * {
+    will-change: auto !important;
+  }
+
+  /* Matikan parallax-bg-blob animation di mobile */
+  .parallax-bg-blob {
+    animation: none !important;
+  }
+
   /* Disable hover effects on mobile */
   .hover\:scale-105:hover {
     transform: scale(1);

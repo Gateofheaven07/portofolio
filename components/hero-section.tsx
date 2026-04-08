@@ -52,7 +52,10 @@ export default function HeroSection() {
   }, [])
 
   // ── Parallax via rAF — background 0.25×, foreground 0.07× (subtle)
+  // Dinonaktifkan di mobile (≤640px) karena menyebabkan scroll berat
   useEffect(() => {
+    if (window.innerWidth <= 640) return  // skip parallax on mobile
+
     let rafId: number
 
     const onScroll = () => {
@@ -82,8 +85,10 @@ export default function HeroSection() {
     }
   }, [])
 
-  // ── Digital rain particles (DOM-only, no state)
+  // ── Digital rain particles — dinonaktifkan di mobile untuk performa scroll
   useEffect(() => {
+    if (window.innerWidth <= 640) return  // skip particles on mobile
+
     const container = particlesRef.current
     if (!container) return
 
