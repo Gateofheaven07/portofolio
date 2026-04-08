@@ -184,18 +184,34 @@ export default function Home() {
       <div id="hero">
         <HeroSection />
       </div>
+
+      {/* Glowing divider */}
+      <div className="section-divider mx-auto max-w-4xl" />
+
       <div id="projects">
         <ProjectsSection />
       </div>
+
+      <div className="section-divider mx-auto max-w-4xl" />
+
       <div id="timeline">
         <TimelineSection />
       </div>
+
+      <div className="section-divider mx-auto max-w-4xl" />
+
       <div id="about">
         <AboutSection />
       </div>
+
+      <div className="section-divider mx-auto max-w-4xl" />
+
       <div id="skills">
         <SkillsSection />
       </div>
+
+      <div className="section-divider mx-auto max-w-4xl" />
+
       <div id="contact">
         <ContactSection />
       </div>

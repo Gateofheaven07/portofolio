@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { AnimatedSection } from "./animated-section"
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -12,9 +13,8 @@ export default function AboutSection() {
       if (sectionRef.current && parallaxRef.current) {
         const rect = sectionRef.current.getBoundingClientRect()
         const scrolled = window.pageYOffset
-        const rate = scrolled * -0.5 // Parallax speed multiplier
+        const rate = scrolled * -0.5
 
-        // Only apply parallax when section is in view
         if (rect.top <= window.innerHeight && rect.bottom >= 0) {
           parallaxRef.current.style.transform = `translateY(${rate}px)`
         }
@@ -25,24 +25,6 @@ export default function AboutSection() {
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up")
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    const elements = sectionRef.current?.querySelectorAll(".reveal-on-scroll")
-    elements?.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
   }, [])
 
   return (
@@ -91,26 +73,26 @@ export default function AboutSection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4 reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700">
-          <h2 className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon">About Me</h2>
-          <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
-            Cerita di balik kode, visi di balik layar
-          </p>
-
-          {/* Decorative line */}
-          <div className="flex items-center justify-center space-x-4 mt-8">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-green)]" />
-            <div className="w-2 h-2 bg-[var(--neon-green)] rounded-full animate-pulse" />
-            <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-green)]" />
+        <AnimatedSection variant="fade-up" delay={0} duration={800}>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon">About Me</h2>
+            <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
+              Cerita di balik kode, visi di balik layar
+            </p>
+            <div className="flex items-center justify-center space-x-4 mt-8">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-green)]" />
+              <div className="w-2 h-2 bg-[var(--neon-green)] rounded-full animate-pulse" />
+              <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-green)]" />
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         {/* Two-column cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start content-start">
           {/* Left Column - Personal Story */}
           <div className="space-y-8">
-            <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-200 h-full">
-              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
+            <AnimatedSection variant="fade-right" delay={100} duration={700}>
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -128,10 +110,10 @@ export default function AboutSection() {
                   dalam berbagai bidang teknologi informasi untuk menciptakan solusi yang inovatif dan berkualitas.
                 </p>
               </div>
-            </div>
+            </AnimatedSection>
 
-            <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-400 h-full">
-              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
+            <AnimatedSection variant="fade-right" delay={200} duration={700}>
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -148,11 +130,10 @@ export default function AboutSection() {
                   <span className="text-[var(--neon-green)] font-orbitron text-sm">"Kode adalah puisi dalam gerakan"</span>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
 
-            {/* CTA moved here to align and match width with left column cards */}
-            <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-500 h-full">
-              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
+            <AnimatedSection variant="fade-right" delay={300} duration={700}>
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -187,13 +168,13 @@ export default function AboutSection() {
                   </button>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
           </div>
 
-          {/* Right Column - Stats and Highlights */}
+          {/* Right Column */}
           <div className="space-y-8">
-            <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-300 h-full">
-              <div className="rounded-2xl p-8 h-full" style={{
+            <AnimatedSection variant="fade-left" delay={150} duration={700}>
+              <div className="rounded-2xl p-8 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -219,10 +200,10 @@ export default function AboutSection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
 
-            <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-500 h-full">
-              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full" style={{
+            <AnimatedSection variant="fade-left" delay={250} duration={700}>
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -257,10 +238,10 @@ export default function AboutSection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
 
-            <div className="reveal-on-scroll opacity-0 transform translate-y-8 transition-all duration-700 delay-600 h-full">
-              <div className="glassmorphism rounded-2xl p-8 space-y-6 h-full">
+            <AnimatedSection variant="fade-left" delay={350} duration={700}>
+              <div className="glassmorphism rounded-2xl p-8 space-y-6 h-full card-shimmer">
                 <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-4">Di Luar Kode</h3>
                 <p className="text-gray-300 leading-relaxed text-sm">
                   Ketika saya tidak sedang merancang pengalaman digital, Anda akan menemukan saya menjelajahi persimpangan antara seni dan
@@ -278,7 +259,7 @@ export default function AboutSection() {
                   ))}
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { AnimatedSection } from "./animated-section"
 
 interface Project {
   id: number
@@ -253,30 +254,6 @@ export default function ProjectsSection() {
   // Tentukan project yang akan ditampilkan
   const displayedProjects = showAllProjects ? projects : projects.slice(0, 3)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const cards = entry.target.querySelectorAll(".project-card")
-            cards.forEach((card, index) => {
-              setTimeout(() => {
-                card.classList.add("animate-fade-in-up")
-              }, index * 100)
-            })
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [showAllProjects])
-
   return (
     <section ref={sectionRef} id="projects" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full" style={{ touchAction: 'pan-y' }}>
       {/* Background Effects */}
@@ -295,47 +272,49 @@ export default function ProjectsSection() {
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">Projects & Achievements</h2>
-          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
-          Temukan perjalanan saya dalam mengubah ide menjadi pengalaman digital yang bermakna.
-          </p>
-
-          {/* Decorative line */}
-          <div className="flex items-center justify-center space-x-4 mt-8">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-cyan)]" />
-            <div className="w-2 h-2 bg-[var(--neon-cyan)] rounded-full animate-pulse" />
-            <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-cyan)]" />
+        <AnimatedSection variant="fade-up" delay={0} duration={800}>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">
+              Projects &amp; Achievements
+            </h2>
+            <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
+              Temukan perjalanan saya dalam mengubah ide menjadi pengalaman digital yang bermakna.
+            </p>
+            <div className="flex items-center justify-center space-x-4 mt-8">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-cyan)]" />
+              <div className="w-2 h-2 bg-[var(--neon-cyan)] rounded-full animate-pulse" />
+              <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-cyan)]" />
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
 
-        {/* Projects Grid */}
+        {/* Projects Grid — stagger per card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
           {displayedProjects.map((project, index) => (
-            <div
-              key={project.id}
-              className="project-card opacity-0 transform translate-y-8 transition-all duration-700 flex"
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <ProjectCard project={project} />
-            </div>
+            <AnimatedSection key={project.id} variant="scale-up" delay={index * 100} duration={650} threshold={0.05}>
+              <div className="h-full flex">
+                <ProjectCard project={project} />
+              </div>
+            </AnimatedSection>
           ))}
         </div>
 
         {/* View More Button */}
         {projects.length > 3 && (
-          <div className="text-center mt-16">
-            <button 
-              onClick={() => setShowAllProjects(!showAllProjects)}
-              className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-green)] border-2 border-[var(--neon-green)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-green)]"
-            >
-              <div className="absolute inset-0 bg-[var(--neon-green)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></div>
-              <span className="relative z-10 flex items-center gap-2">
-                {showAllProjects ? "View Less" : "View All Projects"}
-                <span className="text-xl">{showAllProjects ? "↑" : "→"}</span>
-              </span>
-            </button>
-          </div>
+          <AnimatedSection variant="fade-up" delay={100} duration={600}>
+            <div className="text-center mt-16">
+              <button
+                onClick={() => setShowAllProjects(!showAllProjects)}
+                className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-green)] border-2 border-[var(--neon-green)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-green)]"
+              >
+                <div className="absolute inset-0 bg-[var(--neon-green)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+                <span className="relative z-10 flex items-center gap-2">
+                  {showAllProjects ? "View Less" : "View All Projects"}
+                  <span className="text-xl">{showAllProjects ? "↑" : "→"}</span>
+                </span>
+              </button>
+            </div>
+          </AnimatedSection>
         )}
       </div>
     </section>

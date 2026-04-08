@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useState } from "react";
+import { AnimatedSection } from "./animated-section";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -95,26 +96,27 @@ export default function ContactSection() {
       />
 
       <div className="max-w-4xl mx-auto relative z-10">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">
-            Contact Me
-          </h2>
-          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
-            Siap mewujudkan visi digital Anda? Mari mulai percakapan.
-          </p>
+        <AnimatedSection variant="fade-up" delay={0} duration={800}>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">
+              Contact Me
+            </h2>
+            <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
+              Siap mewujudkan visi digital Anda? Mari mulai percakapan.
+            </p>
 
-          <div className="flex items-center justify-center space-x-4 mt-8">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-cyan-400" />
-            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-            <div
-              className="w-16 h-0.5 bg-gradient-to-l from-transparent to-cyan-400"
-              style={{ animationDelay: "1s" }}
-            />
+            <div className="flex items-center justify-center space-x-4 mt-8">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-cyan-400" />
+              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+              <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-cyan-400" />
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
-          <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden">
+          {/* Form — slide in from left */}
+          <AnimatedSection variant="fade-right" delay={100} duration={750}>
+            <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden">
             <div className="absolute inset-0 opacity-20">
               <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" />
               <div
@@ -245,9 +247,12 @@ export default function ContactSection() {
                 </span>
               </button>
             </form>
-          </div>
+            </div>
+          </AnimatedSection>
 
-          <div className="space-y-8">
+          {/* Info column — slide in from right */}
+          <AnimatedSection variant="fade-left" delay={200} duration={750}>
+            <div className="space-y-8">
             <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8">
               <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-6">
                 Contact Me
@@ -326,7 +331,8 @@ export default function ContactSection() {
                 </span>
               </div>
             </div>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

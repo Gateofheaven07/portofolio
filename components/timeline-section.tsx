@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { AnimatedSection } from "./animated-section"
 
 interface Achievement {
   id: number
@@ -245,44 +246,19 @@ function TimelineNode({
 }: { achievement: Achievement; onClick: () => void; index: number }) {
   const nodeRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add("animate-fade-in-left")
-            }, index * 200)
-          }
-        })
-      },
-      { threshold: 0.5 },
-    )
-
-    if (nodeRef.current) {
-      observer.observe(nodeRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [index])
-
   const getNodeColor = (type: string) => {
     switch (type) {
-      case "certification":
-        return "var(--neon-green)"
-      case "award":
-        return "var(--neon-pink)"
-      case "milestone":
-        return "var(--neon-cyan)"
-      default:
-        return "var(--neon-cyan)"
+      case "certification": return "var(--neon-green)"
+      case "award":         return "var(--neon-pink)"
+      case "milestone":     return "var(--neon-cyan)"
+      default:              return "var(--neon-cyan)"
     }
   }
 
   return (
     <div
       ref={nodeRef}
-      className="timeline-node opacity-0 transform translate-x-4 sm:translate-x-6 md:translate-x-8 transition-all duration-700 relative flex items-start sm:items-center group cursor-pointer"
+      className="timeline-node relative flex items-start sm:items-center group cursor-pointer"
       onClick={onClick}
     >
       {/* Timeline Line Connection */}
@@ -399,19 +375,21 @@ export default function TimelineSection() {
 
       <div className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">Achievement Timeline</h2>
-          <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
-          Perjalanan pencapaian dan sertifikasi profesional saya
-          </p>
-
-          {/* Decorative line */}
-          <div className="flex items-center justify-center space-x-4 mt-8">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-pink)]" />
-            <div className="w-2 h-2 bg-[var(--neon-pink)] rounded-full animate-pulse" />
-            <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-pink)]" />
+        <AnimatedSection variant="fade-up" delay={0} duration={800}>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">
+              Achievement Timeline
+            </h2>
+            <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
+              Perjalanan pencapaian dan sertifikasi profesional saya
+            </p>
+            <div className="flex items-center justify-center space-x-4 mt-8">
+              <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-pink)]" />
+              <div className="w-2 h-2 bg-[var(--neon-pink)] rounded-full animate-pulse" />
+              <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-pink)]" />
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         {/* Timeline */}
         <div className="relative space-y-6 sm:space-y-8">
@@ -419,35 +397,38 @@ export default function TimelineSection() {
           <div className="absolute left-3 sm:left-4 md:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--neon-cyan)] via-[var(--neon-green)] to-[var(--neon-pink)] opacity-50" />
 
           {achievements.map((achievement, index) => (
-            <TimelineNode
+            <AnimatedSection
               key={achievement.id}
-              achievement={achievement}
-              onClick={() => handleNodeClick(achievement)}
-              index={index}
-            />
+              variant="fade-right"
+              delay={index * 90}
+              duration={600}
+              threshold={0.08}
+            >
+              <TimelineNode
+                achievement={achievement}
+                onClick={() => handleNodeClick(achievement)}
+                index={index}
+              />
+            </AnimatedSection>
           ))}
         </div>
 
         {/* Stats Summary */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center glassmorphism rounded-lg p-6">
-            <div className="text-3xl font-orbitron font-bold text-[var(--neon-green)] mb-2">
-              {achievements.filter((a) => a.type === "certification").length}
-            </div>
-            <div className="text-sm font-orbitron text-gray-400">Certifications</div>
-          </div>
-          <div className="text-center glassmorphism rounded-lg p-6">
-            <div className="text-3xl font-orbitron font-bold text-[var(--neon-pink)] mb-2">
-              {achievements.filter((a) => a.type === "award").length}
-            </div>
-            <div className="text-sm font-orbitron text-gray-400">Awards</div>
-          </div>
-          <div className="text-center glassmorphism rounded-lg p-6">
-            <div className="text-3xl font-orbitron font-bold text-[var(--neon-cyan)] mb-2">
-              {achievements.filter((a) => a.type === "milestone").length}
-            </div>
-            <div className="text-sm font-orbitron text-gray-400">Milestones</div>
-          </div>
+          {[
+            { label: "Certifications", count: achievements.filter((a) => a.type === "certification").length, color: "var(--neon-green)" },
+            { label: "Awards",         count: achievements.filter((a) => a.type === "award").length,         color: "var(--neon-pink)"  },
+            { label: "Milestones",     count: achievements.filter((a) => a.type === "milestone").length,     color: "var(--neon-cyan)"  },
+          ].map((stat, i) => (
+            <AnimatedSection key={stat.label} variant="scale-up" delay={150 + i * 80} duration={650}>
+              <div className="text-center glassmorphism rounded-lg p-6">
+                <div className="text-3xl font-orbitron font-bold mb-2" style={{ color: stat.color }}>
+                  {stat.count}
+                </div>
+                <div className="text-sm font-orbitron text-gray-400">{stat.label}</div>
+              </div>
+            </AnimatedSection>
+          ))}
         </div>
       </div>
 
