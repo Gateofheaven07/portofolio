@@ -981,3 +981,98 @@ section {
   }
 }
 
+/* ============================================
+   LOADING SCREEN ANIMATIONS
+   ============================================ */
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes loading-fill {
+  0%   { width: 0%; }
+  30%  { width: 45%; }
+  60%  { width: 72%; }
+  85%  { width: 90%; }
+  100% { width: 100%; }
+}
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+@keyframes progress-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ============================================
+   HERO CONTENT REVEAL (after loading)
+   ============================================ */
+@keyframes hero-content-in {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.hero-reveal {
+  animation: hero-content-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform, filter;
+}
+
+/* ============================================
+   PARALLAX HERO
+   ============================================ */
+.hero-parallax-bg {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.hero-parallax-fg {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ============================================
+   SECTION BLUR TRANSITION
+   ============================================ */
+.section-blur-enter {
+  animation: section-blur-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes section-blur-in {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   SHOOTING STARS
+   ============================================ */
+/* Shooting stars use Web Animations API inline — no CSS needed here */
+/* But we add a subtle twinkle for small ambient stars if used */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.3); }
+}
+
+/* Shooting star glow pulse on head */
+@keyframes head-glow {
+  0%, 100% { box-shadow: 0 0 4px 2px rgba(255,255,255,0.8), 0 0 10px 4px rgba(0,191,255,0.6); }
+  50%       { box-shadow: 0 0 8px 4px rgba(255,255,255,0.9), 0 0 20px 8px rgba(0,191,255,0.8); }
+}
+
+
