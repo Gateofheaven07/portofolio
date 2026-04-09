@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { AnimatedSection } from "./animated-section"
+import { AnimateIn, TextReveal } from "./animations"
 
 interface Achievement {
   id: number
@@ -346,6 +346,7 @@ function TimelineNode({
 export default function TimelineSection() {
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showAllTimeline, setShowAllTimeline] = useState(false)
 
   const handleNodeClick = (achievement: Achievement) => {
     setSelectedAchievement(achievement)
@@ -375,11 +376,13 @@ export default function TimelineSection() {
 
       <div className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" delay={0} duration={800}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">
-              Achievement Timeline
-            </h2>
+            <TextReveal
+              as="h2"
+              text="Achievement Timeline"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon"
+            />
             <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
               Perjalanan pencapaian dan sertifikasi profesional saya
             </p>
@@ -389,28 +392,48 @@ export default function TimelineSection() {
               <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-pink)]" />
             </div>
           </div>
-        </AnimatedSection>
+        </AnimateIn>
 
         {/* Timeline */}
         <div className="relative space-y-6 sm:space-y-8">
           {/* Main Timeline Line */}
           <div className="absolute left-3 sm:left-4 md:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--neon-cyan)] via-[var(--neon-green)] to-[var(--neon-pink)] opacity-50" />
 
-          {achievements.map((achievement, index) => (
-            <AnimatedSection
-              key={achievement.id}
-              variant="fade-right"
-              delay={index * 90}
-              duration={600}
-              threshold={0.08}
-            >
-              <TimelineNode
-                achievement={achievement}
-                onClick={() => handleNodeClick(achievement)}
-                index={index}
-              />
-            </AnimatedSection>
-          ))}
+          {achievements.map((achievement, index) => {
+            const isHiddenOnMobile = index >= 4 && !showAllTimeline
+            return (
+              <div key={achievement.id} className={isHiddenOnMobile ? "hidden sm:block" : "block"}>
+                <AnimateIn
+                  variant="fade-right"
+                  delay={index * 0.09}
+                  duration={0.6}
+                  threshold={0.08}
+                >
+                  <TimelineNode
+                    achievement={achievement}
+                    onClick={() => handleNodeClick(achievement)}
+                    index={index}
+                  />
+                </AnimateIn>
+              </div>
+            )
+          })}
+
+          {/* Show More Button (Mobile Only) */}
+          {achievements.length > 4 && (
+            <div className="text-center mt-12 sm:hidden pl-3">
+              <button
+                onClick={() => setShowAllTimeline(!showAllTimeline)}
+                className="group relative px-6 py-3 font-orbitron font-medium text-[var(--neon-cyan)] border-2 border-[var(--neon-cyan)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_20px_var(--neon-cyan)] w-full"
+              >
+                <div className="absolute inset-0 bg-[var(--neon-cyan)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {showAllTimeline ? "Lihat Lebih Sedikit" : "Lihat Lebih Banyak"}
+                  <span className="text-xl">{showAllTimeline ? "↑" : "↓"}</span>
+                </span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Stats Summary */}
@@ -420,14 +443,14 @@ export default function TimelineSection() {
             { label: "Awards",         count: achievements.filter((a) => a.type === "award").length,         color: "var(--neon-pink)"  },
             { label: "Milestones",     count: achievements.filter((a) => a.type === "milestone").length,     color: "var(--neon-cyan)"  },
           ].map((stat, i) => (
-            <AnimatedSection key={stat.label} variant="scale-up" delay={150 + i * 80} duration={650}>
+            <AnimateIn key={stat.label} variant="scale-in" delay={0.15 + i * 0.08} duration={0.65}>
               <div className="text-center glassmorphism rounded-lg p-6">
                 <div className="text-3xl font-orbitron font-bold mb-2" style={{ color: stat.color }}>
                   {stat.count}
                 </div>
                 <div className="text-sm font-orbitron text-gray-400">{stat.label}</div>
               </div>
-            </AnimatedSection>
+            </AnimateIn>
           ))}
         </div>
       </div>

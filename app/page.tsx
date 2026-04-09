@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
+import { motion } from "framer-motion"
 import Navbar from "@/components/navbar"
 import HeroSection from "@/components/hero-section"
 import ProjectsSection from "@/components/projects-section"
@@ -10,135 +11,10 @@ import SkillsSection from "@/components/skills-section"
 import ContactSection from "@/components/contact-section"
 import ScrollProgress from "@/components/scroll-progress"
 import SectionNavDots from "@/components/section-nav-dots"
-import { AnimatedSection } from "@/components/animated-section"
+import { PageLoader } from "@/components/animations"
 
-// ─── Loading Screen ─────────────────────────────────────────────────────────
-function LoadingScreen({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<"in" | "hold" | "out">("in")
-  const [dots, setDots] = useState("")
-
-  // Animated dots
-  useEffect(() => {
-    const iv = setInterval(() => setDots(d => (d.length >= 3 ? "" : d + ".")), 400)
-    return () => clearInterval(iv)
-  }, [])
-
-  // Sequence: fade-in → hold → fade-out → call onDone
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase("hold"), 400)
-    const t2 = setTimeout(() => setPhase("out"), 1800)
-    const t3 = setTimeout(onDone, 2500)
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
-  }, [onDone])
-
-  return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray-900"
-      style={{
-        opacity:    phase === "out" ? 0 : 1,
-        transform:  phase === "out" ? "scale(0.96) translateY(-20px)" : "scale(1) translateY(0)",
-        transition: "opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1)",
-        pointerEvents: phase === "out" ? "none" : "all",
-      }}
-    >
-      {/* Radial glow bg */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(0,191,255,0.06) 0%, transparent 70%)",
-        }}
-      />
-
-      <div
-        className="relative flex flex-col items-center gap-6"
-        style={{
-          opacity: phase === "in" ? 0 : 1,
-          transform: phase === "in" ? "translateY(12px)" : "translateY(0)",
-          transition: "opacity 0.5s ease, transform 0.5s ease",
-        }}
-      >
-        {/* Spinner */}
-        <div className="relative w-16 h-16">
-          <div
-            className="absolute inset-0 rounded-full border-4 border-transparent"
-            style={{
-              borderTopColor: "var(--neon-cyan)",
-              borderRightColor: "rgba(0,191,255,0.3)",
-              animation: "spin 0.9s linear infinite",
-            }}
-          />
-          <div
-            className="absolute inset-2 rounded-full border-2 border-transparent"
-            style={{
-              borderBottomColor: "rgba(124,58,237,0.8)",
-              animation: "spin 1.4s linear infinite reverse",
-            }}
-          />
-          {/* Center dot */}
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <div
-              className="w-2 h-2 rounded-full bg-cyan-400"
-              style={{ boxShadow: "0 0 8px rgba(0,191,255,0.8)" }}
-            />
-          </div>
-        </div>
-
-        {/* Text */}
-        <div className="text-center">
-          <h2
-            className="text-xl font-orbitron font-bold tracking-widest"
-            style={{
-              color: "var(--neon-cyan)",
-              textShadow: "0 0 10px rgba(0,191,255,0.5)",
-            }}
-          >
-            INITIALIZING{dots}
-          </h2>
-          <p className="text-xs text-gray-500 font-orbitron mt-1 tracking-widest">
-            LOADING PORTFOLIO
-          </p>
-        </div>
-
-        {/* Progress bar */}
-        <div className="w-48 h-px bg-gray-800 rounded-full overflow-hidden">
-          <div
-            className="h-full rounded-full"
-            style={{
-              background: "linear-gradient(90deg, var(--neon-cyan), #7c3aed)",
-              boxShadow: "0 0 8px rgba(0,191,255,0.5)",
-              animation: "loading-fill 1.8s cubic-bezier(0.4,0,0.2,1) forwards",
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ─── Section Wrapper with blur transition ────────────────────────────────────
-interface SectionWrapperProps {
-  children: React.ReactNode
-  delay?: number
-  variant?: "fade-up" | "fade-left" | "fade-right" | "scale-up"
-}
-
-function SectionWrapper({ children, delay = 0, variant = "fade-up" }: SectionWrapperProps) {
-  return (
-    <AnimatedSection
-      variant={variant}
-      delay={delay}
-      duration={750}
-      distance={40}
-      easing="spring"
-      threshold={0.08}
-      rootMargin="0px 0px -60px 0px"
-    >
-      {children}
-    </AnimatedSection>
-  )
-}
+// LoadingScreen sudah diganti dengan <PageLoader /> dari Framer Motion (components/animations/PageLoader.tsx)
+// Setiap section mengelola animasinya sendiri via Framer Motion AnimateIn
 
 // ─── Main Page ───────────────────────────────────────────────────────────────
 export default function Home() {
@@ -204,23 +80,22 @@ export default function Home() {
 
   return (
     <>
-      {/* Loading overlay */}
-      {isLoading && <LoadingScreen onDone={handleLoadDone} />}
+      {/* ── Framer Motion Loading overlay (AnimatePresence 3-D exit) */}
+      {isLoading && <PageLoader onDone={handleLoadDone} holdMs={1700} exitMs={680} />}
 
       {/* ── Nav dots — OUTSIDE main to avoid CSS transform containing block bug */}
       <SectionNavDots />
 
-      {/* Main content — cinematic reveal after loading */}
-      <main
+      {/* ── Main content — cinematic 3-D reveal after loading */}
+      <motion.main
         className="relative min-h-screen w-full max-w-full"
-        style={{
-          overflowX: "clip",
-          opacity:    contentVisible ? 1 : 0,
-          transform:  contentVisible ? "scale(1) translateY(0px)" : "scale(0.97) translateY(24px)",
-          transition: contentVisible
-            ? "opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)"
-            : "none",
-        }}
+        style={{ overflowX: "clip" }}
+        initial={{ opacity: 0, scale: 0.96, y: 28, filter: "blur(4px)" }}
+        animate={contentVisible
+          ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
+          : { opacity: 0, scale: 0.96, y: 28, filter: "blur(4px)" }
+        }
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Scroll progress bar */}
         <ScrollProgress />
@@ -264,49 +139,39 @@ export default function Home() {
 
         {/* ── Hero (no AnimatedSection — hero manages own reveal) */}
         <div id="hero">
-          <HeroSection />
+          <HeroSection isReady={contentVisible} />
         </div>
 
         {/* ── Projects */}
         <div className="section-divider mx-auto max-w-4xl" />
         <div id="projects">
-          <SectionWrapper delay={0}>
-            <ProjectsSection />
-          </SectionWrapper>
+          <ProjectsSection />
         </div>
 
         {/* ── Timeline */}
         <div className="section-divider mx-auto max-w-4xl" />
         <div id="timeline">
-          <SectionWrapper delay={0} variant="fade-left">
-            <TimelineSection />
-          </SectionWrapper>
+          <TimelineSection />
         </div>
 
         {/* ── About */}
         <div className="section-divider mx-auto max-w-4xl" />
         <div id="about">
-          <SectionWrapper delay={0} variant="fade-right">
-            <AboutSection />
-          </SectionWrapper>
+          <AboutSection />
         </div>
 
         {/* ── Skills */}
         <div className="section-divider mx-auto max-w-4xl" />
         <div id="skills">
-          <SectionWrapper delay={0} variant="scale-up">
-            <SkillsSection />
-          </SectionWrapper>
+          <SkillsSection />
         </div>
 
         {/* ── Contact */}
         <div className="section-divider mx-auto max-w-4xl" />
         <div id="contact">
-          <SectionWrapper delay={0} variant="fade-up">
-            <ContactSection />
-          </SectionWrapper>
+          <ContactSection />
         </div>
-      </main>
+      </motion.main>
     </>
   )
 }

@@ -1,97 +1,107 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 import ProfileCard from "./profile-card"
 import RocketAnimation from "./rocket-animation"
 
-// ─── Easing constant ─────────────────────────────────────────────────────────
-const EASE = "cubic-bezier(0.22, 1, 0.36, 1)"
+// Custom bezier easing for premium feel
+const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-// ─── Stagger reveal style helper ─────────────────────────────────────────────
-// Each element starts: scale(0.95) opacity(0) translateY(40px)
-// Revealed:            scale(1)    opacity(1) translateY(0)
-function revealStyle(revealed: boolean, delayMs: number): React.CSSProperties {
-  return {
-    opacity:   revealed ? 1 : 0,
-    transform: revealed
-      ? "translateY(0px) scale(1)"
-      : "translateY(40px) scale(0.95)",
-    transition: revealed
-      ? [
-          `opacity   0.85s ${EASE} ${delayMs}ms`,
-          `transform 0.85s ${EASE} ${delayMs}ms`,
-        ].join(", ")
-      : "none",
-    willChange: "opacity, transform",
+// Custom variants untuk intro hero 
+const introContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.15,
+      staggerChildren: 0.20,
+    }
   }
 }
 
-export default function HeroSection() {
+const introBgVariants = {
+  hidden: { opacity: 0, scale: 1.05, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 1.2, ease: customEase }
+  }
+}
+
+const introTitleVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: customEase }
+  }
+}
+
+const introSubVariants = {
+  hidden: { opacity: 0, y: 20, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: customEase }
+  }
+}
+
+const introButtonVariants = {
+  hidden: { opacity: 0, y: 15, scale: 0.9, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.6, ease: customEase }
+  }
+}
+
+// ─── Hero section ─────────────────────────────────────────────────────────────
+export default function HeroSection({ isReady = true }: { isReady?: boolean }) {
   const particlesRef = useRef<HTMLDivElement>(null)
   const sectionRef   = useRef<HTMLElement>(null)
   const bgRef        = useRef<HTMLDivElement>(null)
   const fgRef        = useRef<HTMLDivElement>(null)
 
-  const [displayText,   setDisplayText]   = useState("")
-  const [currentIndex,  setCurrentIndex]  = useState(0)
-  const [isDeleting,    setIsDeleting]    = useState(false)
-  const [taglineText,   setTaglineText]   = useState("")
-  const [revealed,      setRevealed]      = useState(false)
+  const [displayText,  setDisplayText]  = useState("")
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isDeleting,   setIsDeleting]   = useState(false)
+  const [taglineText,  setTaglineText]  = useState("")
 
   const fullText = "Hi I'm Taufik Ramlan A"
   const tagline  = "IT Enthusiast"
 
-  // ── Trigger reveal: small delay so CSS transition fires properly
+  // ── Parallax via rAF — desktoponly ────────────────────────────────────────
   useEffect(() => {
-    // requestAnimationFrame ensures the initial (hidden) state painted first
-    const raf = requestAnimationFrame(() => {
-      const t = setTimeout(() => setRevealed(true), 120)
-      return () => clearTimeout(t)
-    })
-    return () => cancelAnimationFrame(raf)
-  }, [])
-
-  // ── Parallax via rAF — background 0.25×, foreground 0.07× (subtle)
-  // Dinonaktifkan di mobile (≤640px) karena menyebabkan scroll berat
-  useEffect(() => {
-    if (window.innerWidth <= 640) return  // skip parallax on mobile
+    if (window.innerWidth <= 640) return
 
     let rafId: number
-
     const onScroll = () => {
       rafId = requestAnimationFrame(() => {
         const section = sectionRef.current
         if (!section) return
-
-        // Only apply while hero is in view
         const rect = section.getBoundingClientRect()
         if (rect.bottom < 0 || rect.top > window.innerHeight) return
-
-        const scrolled = -rect.top          // positive when scrolled down
-
-        if (bgRef.current) {
-          bgRef.current.style.transform = `translateY(${scrolled * 0.25}px)`
-        }
-        if (fgRef.current) {
-          fgRef.current.style.transform = `translateY(${scrolled * 0.07}px)`
-        }
+        const scrolled = -rect.top
+        if (bgRef.current) bgRef.current.style.transform = `translateY(${scrolled * 0.25}px)`
+        // Efek parallax pada foreground dihapus agar konten tetap di tempat
       })
     }
-
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      cancelAnimationFrame(rafId)
-    }
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(rafId) }
   }, [])
 
-  // ── Digital rain particles — dinonaktifkan di mobile untuk performa scroll
+  // ── Digital rain particles — desktop only ─────────────────────────────────
   useEffect(() => {
-    if (window.innerWidth <= 640) return  // skip particles on mobile
-
+    if (window.innerWidth <= 640) return
     const container = particlesRef.current
     if (!container) return
-
     const createParticle = () => {
       const p = document.createElement("div")
       const h = Math.random() * 20 + 10
@@ -109,22 +119,17 @@ export default function HeroSection() {
       container.appendChild(p)
       setTimeout(() => { if (container.contains(p)) container.removeChild(p) }, 7000)
     }
-
     for (let i = 0; i < 12; i++) setTimeout(createParticle, i * 200)
     const iv = setInterval(createParticle, 450)
     return () => clearInterval(iv)
   }, [])
 
-  // ── Typewriter — main heading
+  // ── Typewriter — main heading ─────────────────────────────────────────────
   useEffect(() => {
     const speed = isDeleting ? 50 : 100
     const pause = 2000
-
     if (!isDeleting && currentIndex < fullText.length) {
-      const t = setTimeout(() => {
-        setDisplayText(fullText.slice(0, currentIndex + 1))
-        setCurrentIndex(i => i + 1)
-      }, speed)
+      const t = setTimeout(() => { setDisplayText(fullText.slice(0, currentIndex + 1)); setCurrentIndex(i => i + 1) }, speed)
       return () => clearTimeout(t)
     }
     if (!isDeleting && currentIndex === fullText.length) {
@@ -132,22 +137,16 @@ export default function HeroSection() {
       return () => clearTimeout(t)
     }
     if (isDeleting && currentIndex > 0) {
-      const t = setTimeout(() => {
-        setDisplayText(fullText.slice(0, currentIndex - 1))
-        setCurrentIndex(i => i - 1)
-      }, 50)
+      const t = setTimeout(() => { setDisplayText(fullText.slice(0, currentIndex - 1)); setCurrentIndex(i => i - 1) }, 50)
       return () => clearTimeout(t)
     }
     if (isDeleting && currentIndex === 0) setIsDeleting(false)
   }, [currentIndex, isDeleting, fullText])
 
-  // ── Typewriter — tagline
+  // ── Typewriter — tagline ──────────────────────────────────────────────────
   useEffect(() => {
     if (taglineText.length < tagline.length) {
-      const t = setTimeout(
-        () => setTaglineText(tagline.slice(0, taglineText.length + 1)),
-        80
-      )
+      const t = setTimeout(() => setTaglineText(tagline.slice(0, taglineText.length + 1)), 80)
       return () => clearTimeout(t)
     }
   }, [taglineText, tagline])
@@ -158,16 +157,22 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen overflow-hidden w-full max-w-full bg-gradient-to-br from-teal-900 via-slate-900 to-slate-900"
     >
-      {/* ── Parallax background layer */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{ willChange: "transform", backfaceVisibility: "hidden" }}
+      <motion.div
+        initial="hidden"
+        animate={isReady ? "visible" : "hidden"}
+        variants={introContainerVariants}
+        className="w-full h-full"
       >
-        {/* Digital rain container */}
+        {/* ── Parallax background layer */}
+        <motion.div
+          variants={introBgVariants}
+          ref={bgRef}
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{ willChange: "transform", backfaceVisibility: "hidden" }}
+        >
         <div ref={particlesRef} className="absolute inset-0" />
 
-        {/* Ambient glow blobs — drift slowly */}
+        {/* Ambient glow blobs */}
         <div
           className="parallax-bg-blob absolute"
           style={{
@@ -184,106 +189,110 @@ export default function HeroSection() {
             bottom: "5%", right: "10%", animationDelay: "-4s",
           }}
         />
-      </div>
+      </motion.div>
 
       {/* Rocket */}
       <RocketAnimation />
 
       {/* Profile Card — desktop */}
       <div className="absolute top-24 right-4 sm:right-8 md:right-12 lg:right-16 xl:right-20 z-20 hidden lg:block">
-        <ProfileCard />
+        <motion.div variants={introSubVariants}>
+          <ProfileCard />
+        </motion.div>
       </div>
 
-      {/* ── Foreground parallax layer */}
-      <div
-        ref={fgRef}
-        className="relative z-10 w-full max-w-7xl mx-auto
-                   px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16
-                   pt-20 sm:pt-24 md:pt-28 lg:pt-32
-                   min-h-screen flex items-center"
-        style={{ willChange: "transform", backfaceVisibility: "hidden" }}
-      >
-        <div className="flex flex-col lg:flex-row lg:items-center gap-6 sm:gap-8 w-full">
+      {/* ── 3-D perspective container — wraps foreground content */}
+      <div style={{ perspective: "1200px" }} className="w-full">
+        <div
+          ref={fgRef}
+          className="relative z-10 w-full max-w-7xl mx-auto
+                     px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16
+                     pt-20 sm:pt-24 md:pt-28 lg:pt-32
+                     min-h-screen flex items-center"
+          style={{ willChange: "transform", backfaceVisibility: "hidden" }}
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center gap-6 sm:gap-8 w-full">
 
-          {/* ── Left: staggered reveal */}
-          <div className="text-left space-y-6 sm:space-y-8 max-w-full lg:max-w-3xl flex-1">
-            <div className="space-y-3 sm:space-y-4">
-
-              {/* Quote — delay 0ms */}
-              <div
-                className="text-xs sm:text-sm text-gray-400 font-orbitron origin-left"
-                style={{ ...revealStyle(revealed, 0), fontSize: "inherit" }}
-              >
-                &quot;Learning today, innovating tomorrow.&quot;
-              </div>
-
-              {/* Main heading — delay 120ms */}
-              <h1
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-orbitron font-bold text-white leading-tight break-words"
-                style={revealStyle(revealed, 120)}
-              >
-                {displayText}
-                <span className="animate-pulse">|</span>
-              </h1>
-
-              {/* Tagline — delay 240ms */}
-              <div
-                className="h-6 sm:h-8 flex items-center"
-                style={revealStyle(revealed, 240)}
-              >
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-orbitron font-semibold text-[var(--neon-cyan)] break-words">
-                  {taglineText}
-                  <span className="animate-pulse">|</span>
-                </span>
-              </div>
-
-              {/* Description — delay 360ms */}
-              <p
-                className="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed max-w-full lg:max-w-lg"
-                style={revealStyle(revealed, 360)}
-              >
-                Seorang IT Enthusiast yang antusias mengeksplorasi berbagai teknologi terkini.
-                Berpengalaman dalam pengembangan web, analisis data, dan berbagai bidang
-                teknologi informasi. Terus mengembangkan keterampilan dan pengetahuan untuk
-                menciptakan solusi teknologi yang inovatif, efisien, dan berkualitas tinggi.
-              </p>
-            </div>
-
-            {/* Buttons — delay 480ms */}
+            {/* ── Left: staggered reveal container */}
             <div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
-              style={revealStyle(revealed, 480)}
+              className="text-left space-y-6 sm:space-y-8 max-w-full lg:max-w-3xl flex-1"
             >
-              <button className="px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base bg-transparent border border-gray-500 text-gray-300 font-orbitron rounded-lg hover:border-cyan-400 hover:text-white hover:shadow-[0_0_16px_rgba(0,191,255,0.25)] transition-all duration-300">
-                Download CV
-              </button>
-              <button
-                onClick={() => {
-                  const el = document.getElementById("about")
-                  if (el) {
-                    const offset = window.innerWidth < 640 ? 60 : 80
-                    window.scrollTo({
-                      top: el.getBoundingClientRect().top + window.pageYOffset - offset,
-                      behavior: "smooth",
-                    })
-                  }
-                }}
-                className="px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base bg-transparent border border-gray-500 text-gray-300 font-orbitron rounded-lg hover:border-cyan-400 hover:text-white hover:shadow-[0_0_16px_rgba(0,191,255,0.25)] transition-all duration-300"
-              >
-                About Me
-              </button>
-            </div>
-          </div>
+              <div className="space-y-3 sm:space-y-4">
 
-          {/* Profile Card — mobile, delay 560ms */}
-          <div
-            className="block lg:hidden flex justify-center mt-8"
-            style={revealStyle(revealed, 560)}
-          >
-            <ProfileCard />
+                {/* Quote — item 1 */}
+                <motion.div
+                  className="text-xs sm:text-sm text-gray-400 font-orbitron origin-left"
+                  variants={introSubVariants}
+                >
+                  &quot;Learning today, innovating tomorrow.&quot;
+                </motion.div>
+
+                {/* Main heading — item 2 */}
+                <motion.h1
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-orbitron font-bold text-white leading-tight break-words"
+                  variants={introTitleVariants}
+                >
+                  {displayText}
+                  <span className="animate-pulse">|</span>
+                </motion.h1>
+
+                {/* Tagline — item 3 */}
+                <motion.div
+                  className="h-6 sm:h-8 flex items-center"
+                  variants={introSubVariants}
+                >
+                  <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-orbitron font-semibold text-[var(--neon-cyan)] break-words">
+                    {taglineText}
+                    <span className="animate-pulse">|</span>
+                  </span>
+                </motion.div>
+
+                {/* Description — item 4 */}
+                <motion.p
+                  className="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed max-w-full lg:max-w-lg"
+                  variants={introSubVariants}
+                >
+                  Seorang IT Enthusiast yang antusias mengeksplorasi berbagai teknologi terkini.
+                  Berpengalaman dalam pengembangan web, analisis data, dan berbagai bidang
+                  teknologi informasi. Terus mengembangkan keterampilan dan pengetahuan untuk
+                  menciptakan solusi teknologi yang inovatif, efisien, dan berkualitas tinggi.
+                </motion.p>
+              </div>
+
+              {/* Buttons — item 5 */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+                variants={introButtonVariants}
+              >
+                <button className="px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base bg-transparent border border-gray-500 text-gray-300 font-orbitron rounded-lg hover:border-cyan-400 hover:text-white hover:shadow-[0_0_16px_rgba(0,191,255,0.25)] transition-all duration-300">
+                  Download CV
+                </button>
+                <button
+                  onClick={() => {
+                    const el = document.getElementById("about")
+                    if (el) {
+                      const offset = window.innerWidth < 640 ? 60 : 80
+                      window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - offset, behavior: "smooth" })
+                    }
+                  }}
+                  className="px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base bg-transparent border border-gray-500 text-gray-300 font-orbitron rounded-lg hover:border-cyan-400 hover:text-white hover:shadow-[0_0_16px_rgba(0,191,255,0.25)] transition-all duration-300"
+                >
+                  About Me
+                </button>
+              </motion.div>
+            </div>
+
+            {/* Profile Card — mobile, item 6 */}
+            <motion.div
+              className="block lg:hidden flex justify-center mt-8"
+              variants={introSubVariants}
+            >
+              <ProfileCard />
+            </motion.div>
           </div>
         </div>
       </div>
+      </motion.div>
     </section>
   )
 }

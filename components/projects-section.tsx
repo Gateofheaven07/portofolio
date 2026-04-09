@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { AnimatedSection } from "./animated-section"
+import { AnimateIn, TextReveal } from "./animations"
 
 interface Project {
   id: number
@@ -272,11 +272,13 @@ export default function ProjectsSection() {
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" delay={0} duration={800}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon">
-              Projects &amp; Achievements
-            </h2>
+            <TextReveal
+              as="h2"
+              text="Projects & Achievements"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon"
+            />
             <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
               Temukan perjalanan saya dalam mengubah ide menjadi pengalaman digital yang bermakna.
             </p>
@@ -286,22 +288,22 @@ export default function ProjectsSection() {
               <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-cyan)]" />
             </div>
           </div>
-        </AnimatedSection>
+        </AnimateIn>
 
         {/* Projects Grid — stagger per card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
           {displayedProjects.map((project, index) => (
-            <AnimatedSection key={project.id} variant="scale-up" delay={index * 100} duration={650} threshold={0.05}>
+            <AnimateIn key={project.id} variant="scale-in" delay={index * 0.1} duration={0.65} threshold={0.05}>
               <div className="h-full flex">
                 <ProjectCard project={project} />
               </div>
-            </AnimatedSection>
+            </AnimateIn>
           ))}
         </div>
 
         {/* View More Button */}
         {projects.length > 3 && (
-          <AnimatedSection variant="fade-up" delay={100} duration={600}>
+          <AnimateIn variant="fade-up" delay={0.1} duration={0.6}>
             <div className="text-center mt-16">
               <button
                 onClick={() => setShowAllProjects(!showAllProjects)}
@@ -314,7 +316,7 @@ export default function ProjectsSection() {
                 </span>
               </button>
             </div>
-          </AnimatedSection>
+          </AnimateIn>
         )}
       </div>
     </section>
