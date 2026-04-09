@@ -12,8 +12,7 @@
  *   </AnimateIn>
  */
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion } from "framer-motion"
 import {
   fadeUpVariants,
   fadeInVariants,
@@ -62,8 +61,6 @@ export function AnimateIn({
   threshold  = 0.12,
   as         = "div",
 }: AnimateInProps) {
-  const ref     = useRef<HTMLDivElement>(null)
-  const inView  = useInView(ref, { once, amount: threshold })
 
   const transition: Transition = {
     duration,
@@ -84,11 +81,11 @@ export function AnimateIn({
 
   return (
     <MotionTag
-      ref={ref as React.RefObject<HTMLDivElement>}
       className={className}
       variants={variants}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{ once, amount: threshold }}
     >
       {children}
     </MotionTag>

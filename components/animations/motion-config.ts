@@ -107,14 +107,12 @@ export const pageRevealVariants: Variants = {
     scale:      0.95,
     y:          30,
     rotateX:    4,           // subtle 3-D tilt
-    filter:     "blur(4px)",
   },
   visible: {
     opacity:    1,
     scale:      1,
     y:          0,
     rotateX:    0,
-    filter:     "blur(0px)",
     transition: {
       duration: 1.1,
       ease:     EASE_OUT_EXPO,

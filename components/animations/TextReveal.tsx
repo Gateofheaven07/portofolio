@@ -11,8 +11,8 @@
  *   <TextReveal text="PORTFOLIO" mode="char" className="text-6xl font-bold" />
  */
 
-import { motion, useInView } from "framer-motion"
-import { useRef, useMemo } from "react"
+import { motion } from "framer-motion"
+import { useMemo } from "react"
 import { EASE_OUT_EXPO } from "./motion-config"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -42,13 +42,11 @@ const itemVariants = (duration: number) => ({
     opacity:  0,
     y:        22,
     rotateX:  20,           // subtle 3-D flip coming from "above"
-    filter:   "blur(3px)",
   },
   visible: {
     opacity:  1,
     y:        0,
     rotateX:  0,
-    filter:   "blur(0px)",
     transition: { duration, ease: EASE_OUT_EXPO },
   },
 })
@@ -66,8 +64,6 @@ export function TextReveal({
   threshold = 0.1,
   as        = "span",
 }: TextRevealProps) {
-  const ref    = useRef<HTMLElement>(null)
-  const inView = useInView(ref, { once, amount: threshold })
 
   // Split text into tokens (words or chars)
   const tokens = useMemo(() => {
@@ -84,11 +80,11 @@ export function TextReveal({
       className={wrapClass}
     >
       <Tag
-        ref={ref as React.RefObject<HTMLSpanElement>}
         style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", gap: mode === "word" ? "0.28em" : "0" }}
         variants={containerVariants(stagger, delay)}
         initial="hidden"
-        animate={inView ? "visible" : "hidden"}
+        whileInView="visible"
+        viewport={{ once, amount: threshold }}
       >
         {tokens.map((token, i) => (
           <motion.span

@@ -37,7 +37,7 @@ const categoryColors = {
 function SkillCard({ skill, index }: { skill: Skill; index: number }) {
   return (
     <AnimateIn variant="scale-in" delay={index * 0.06} duration={0.6} threshold={0.05}>
-      <div className="card-shimmer group flex flex-col items-center justify-center w-full aspect-square rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer bg-slate-900/40 backdrop-blur-md border border-white/10 hover:bg-slate-800/60 shadow-lg hover:shadow-2xl">
+      <div className="card-shimmer group flex flex-col items-center justify-center w-full aspect-square rounded-2xl p-4 sm:p-6 transition-transform duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer bg-slate-900/80 border border-white/10 hover:bg-slate-800 shadow-lg hover:shadow-2xl">
         <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex flex-1 items-center justify-center mb-3">
           <img
             src={skill.imageSrc}

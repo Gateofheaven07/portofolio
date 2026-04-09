@@ -286,7 +286,7 @@ function TimelineNode({
       </div>
 
       {/* Content Card */}
-      <div className="ml-3 sm:ml-4 md:ml-8 glassmorphism rounded-lg p-4 sm:p-5 md:p-6 flex-1 group-hover:border-[var(--neon-cyan)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,191,255,0.3)] min-w-0">
+      <div className="ml-3 sm:ml-4 md:ml-8 glassmorphism rounded-lg p-4 sm:p-5 md:p-6 flex-1 group-hover:border-[var(--neon-cyan)] transition-colors duration-300 hover:shadow-[0_0_30px_rgba(0,191,255,0.3)] min-w-0">
         <div className="flex items-start justify-between mb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
