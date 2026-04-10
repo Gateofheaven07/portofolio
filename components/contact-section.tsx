@@ -84,9 +84,9 @@ export default function ContactSection() {
       id="contact"
       className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full"
     >
-      <div className="absolute inset-0 cyber-grid opacity-5" />
+      <div className="absolute inset-0 cyber-grid opacity-5 pointer-events-none" />
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background: `
             radial-gradient(ellipse at 20% 30%, rgba(0, 191, 255, 0.08) 0%, transparent 50%),

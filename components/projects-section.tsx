@@ -252,9 +252,9 @@ export default function ProjectsSection() {
   return (
     <section ref={sectionRef} id="projects" className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 relative overflow-x-hidden w-full max-w-full" style={{ touchAction: 'pan-y' }}>
       {/* Background Effects */}
-      <div className="absolute inset-0 cyber-grid opacity-5" />
+      <div className="absolute inset-0 cyber-grid opacity-5 pointer-events-none" />
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(ellipse at 20% 50%, 
             rgba(0, 191, 255, 0.05) 0%, 
@@ -288,7 +288,7 @@ export default function ProjectsSection() {
         {/* Projects Grid — stagger per card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
           {displayedProjects.map((project, index) => (
-            <AnimateIn key={project.id} variant="scale-in" delay={index * 0.1} duration={0.65} threshold={0.05}>
+            <AnimateIn key={project.id} variant="fade-up" delay={index * 0.1} duration={0.65} threshold={0.05}>
               <div className="h-full flex">
                 <ProjectCard project={project} />
               </div>

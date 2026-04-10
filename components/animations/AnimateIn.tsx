@@ -41,12 +41,12 @@ const variantMap: Record<AnimVariant, Variants> = {
   "fade-in":    fadeInVariants,
   "scale-in":   scaleInVariants,
   "fade-left":  {
-    hidden:  { opacity: 0, x: -40, scale: 0.97 },
-    visible: { opacity: 1, x: 0,   scale: 1    },
+    hidden:  { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0 },
   },
   "fade-right": {
-    hidden:  { opacity: 0, x: 40, scale: 0.97 },
-    visible: { opacity: 1, x: 0,  scale: 1    },
+    hidden:  { opacity: 0, x: 40 },
+    visible: { opacity: 1, x: 0 },
   },
 }
 

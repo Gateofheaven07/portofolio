@@ -41,12 +41,10 @@ const itemVariants = (duration: number) => ({
   hidden:  {
     opacity:  0,
     y:        22,
-    rotateX:  20,           // subtle 3-D flip coming from "above"
   },
   visible: {
     opacity:  1,
     y:        0,
-    rotateX:  0,
     transition: { duration, ease: EASE_OUT_EXPO },
   },
 })
@@ -76,7 +74,7 @@ export function TextReveal({
   return (
     // perspective wrapper — gives depth to rotateX
     <span
-      style={{ display: "inline-block", perspective: "800px" }}
+      style={{ display: "inline-block" }}
       className={wrapClass}
     >
       <Tag

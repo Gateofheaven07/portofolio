@@ -31,11 +31,10 @@ export const transitionSlow: Transition = {
 
 // ── Fade + slide variants (reusable) ─────────────────────────────────────────
 export const fadeUpVariants: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.97 },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y:       0,
-    scale:   1,
     transition: transitionSmooth,
   },
 }
@@ -91,11 +90,10 @@ export const wordContainerVariants: Variants = {
 }
 
 export const wordItemVariants: Variants = {
-  hidden:  { opacity: 0, y: 20, rotateX: 30 },
+  hidden:  { opacity: 0, y: 20 },
   visible: {
     opacity:  1,
     y:        0,
-    rotateX:  0,
     transition: { duration: 0.55, ease: EASE_OUT_EXPO },
   },
 }
@@ -104,15 +102,11 @@ export const wordItemVariants: Variants = {
 export const pageRevealVariants: Variants = {
   hidden: {
     opacity:    0,
-    scale:      0.95,
     y:          30,
-    rotateX:    4,           // subtle 3-D tilt
   },
   visible: {
     opacity:    1,
-    scale:      1,
     y:          0,
-    rotateX:    0,
     transition: {
       duration: 1.1,
       ease:     EASE_OUT_EXPO,
