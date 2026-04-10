@@ -97,9 +97,9 @@ export default function HeroSection({ isReady = true }: { isReady?: boolean }) {
     return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(rafId) }
   }, [])
 
-  // ── Digital rain particles — desktop only ─────────────────────────────────
+  // ── Digital rain particles — optimized for mobile ─────────────────────────
   useEffect(() => {
-    if (window.innerWidth <= 640) return
+    const isMobile = window.innerWidth <= 640
     const container = particlesRef.current
     if (!container) return
     const createParticle = () => {
@@ -119,8 +119,10 @@ export default function HeroSection({ isReady = true }: { isReady?: boolean }) {
       container.appendChild(p)
       setTimeout(() => { if (container.contains(p)) container.removeChild(p) }, 7000)
     }
-    for (let i = 0; i < 12; i++) setTimeout(createParticle, i * 200)
-    const iv = setInterval(createParticle, 450)
+    const initialParticles = isMobile ? 5 : 12
+    const intervalTime = isMobile ? 800 : 450
+    for (let i = 0; i < initialParticles; i++) setTimeout(createParticle, i * 200)
+    const iv = setInterval(createParticle, intervalTime)
     return () => clearInterval(iv)
   }, [])
 
@@ -155,7 +157,7 @@ export default function HeroSection({ isReady = true }: { isReady?: boolean }) {
     <section
       ref={sectionRef}
       id="home"
-      className="relative min-h-screen overflow-hidden w-full max-w-full bg-gradient-to-br from-teal-900 via-slate-900 to-slate-900"
+      className="relative min-h-screen overflow-hidden w-full max-w-full"
     >
       <motion.div
         initial="hidden"

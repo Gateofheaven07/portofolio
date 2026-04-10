@@ -30,10 +30,20 @@ function createStar(id: number): ShootingStar {
 
 export default function ShootingStars({ count = 5 }: { count?: number }) {
   const [stars, setStars] = useState<ShootingStar[]>([])
+  const [activeCount, setActiveCount] = useState(count)
 
   useEffect(() => {
-    setStars(Array.from({ length: count }, (_, i) => createStar(i)))
+    const handleResize = () => {
+      setActiveCount(window.innerWidth < 768 ? Math.min(2, count) : count)
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [count])
+
+  useEffect(() => {
+    setStars(Array.from({ length: activeCount }, (_, i) => createStar(i)))
+  }, [activeCount])
 
   const resetStar = (id: number) => {
     // Reset dengan delay baru agar tidak semua bintang muncul bersamaan
@@ -48,7 +58,7 @@ export default function ShootingStars({ count = 5 }: { count?: number }) {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-[5] overflow-hidden"
+      className="fixed inset-0 pointer-events-none -z-10 overflow-hidden"
       aria-hidden="true"
     >
       {stars.map(star => (

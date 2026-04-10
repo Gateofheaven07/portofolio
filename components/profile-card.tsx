@@ -63,7 +63,7 @@ export default function ProfileCard() {
           <div className="relative w-28 h-28 sm:w-32 sm:h-32">
             <div className="relative w-full h-full rounded-xl sm:rounded-2xl bg-gradient-to-br from-green-900 via-purple-900 to-slate-800 overflow-hidden">
               <Image
-                src="/taufiik foto.jpeg"
+                src="/taufik_profile.jpeg"
                 alt="Taufik Ramlan"
                 fill
                 sizes="(max-width: 640px) 112px, 128px"

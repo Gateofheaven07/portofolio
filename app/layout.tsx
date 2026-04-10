@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import { Orbitron } from "next/font/google"
 import "./globals.css"
 import StarsBackground from "@/components/stars-background"
+import ShootingStars from "@/components/shooting-star"
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -31,7 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${orbitron.variable} scroll-smooth`} style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}>
       <body className={`${orbitron.variable} antialiased overflow-x-hidden max-w-full`} style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="fixed inset-0 -z-20 bg-gradient-to-br from-teal-900 via-slate-900 to-slate-900" />
         <StarsBackground />
+        <ShootingStars />
         {children}
       </body>
     </html>
