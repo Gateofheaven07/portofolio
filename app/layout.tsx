@@ -24,8 +24,10 @@ export const metadata: Metadata = {
     siteName: "Portofolio Taufik",
     images: [
       {
-        url: "https://portofolio-taufik-rmln.vercel.app/taufik_profile.jpeg",
-        alt: "Portofolio Taufik Ramlan",
+        url: "https://portofolio-taufik-rmln.vercel.app/logoo.png",
+        width: 573,
+        height: 548,
+        alt: "Portofolio Taufik Ramlan Logo",
       },
     ],
     locale: "id_ID",
