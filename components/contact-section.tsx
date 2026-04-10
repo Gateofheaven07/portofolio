@@ -261,59 +261,79 @@ export default function ContactSection() {
               </h3>
 
               <div className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full border border-[var(--neon-cyan)] flex items-center justify-center">
+                <a
+                  href="mailto:taupikramlan3590@gmail.com"
+                  className="flex items-center space-x-4 group cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-full border border-[var(--neon-cyan)] flex items-center justify-center transition-colors group-hover:bg-[var(--neon-cyan)] group-hover:bg-opacity-10">
                     <span className="text-[var(--neon-cyan)]">📧</span>
                   </div>
                   <div>
                     <div className="font-orbitron text-sm text-gray-400">
                       Email
                     </div>
-                    <div className="font-orbitron text-white">
+                    <div className="font-orbitron text-white transition-colors group-hover:text-[var(--neon-cyan)]">
                       taupikramlan3590@gmail.com
                     </div>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full border border-[var(--neon-green)] flex items-center justify-center">
+                <a
+                  href="https://www.linkedin.com/in/taufik-ramlan-alfiansyah-b6b439297?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-4 group cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-full border border-[var(--neon-green)] flex items-center justify-center transition-colors group-hover:bg-[var(--neon-green)] group-hover:bg-opacity-10">
                     <span className="text-[var(--neon-green)]">💼</span>
                   </div>
                   <div>
                     <div className="font-orbitron text-sm text-gray-400">
                       LinkedIn
                     </div>
-                    <div className="font-orbitron text-white">
+                    <div className="font-orbitron text-white transition-colors group-hover:text-[var(--neon-green)]">
                       linkedin.com/in/taufikramlan
                     </div>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full border border-[var(--neon-pink)] flex items-center justify-center">
+                <a
+                  href="https://github.com/Gateofheaven07"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-4 group cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-full border border-[var(--neon-pink)] flex items-center justify-center transition-colors group-hover:bg-[var(--neon-pink)] group-hover:bg-opacity-10">
                     <span className="text-[var(--neon-pink)]">🐙</span>
                   </div>
                   <div>
                     <div className="font-orbitron text-sm text-gray-400">
                       GitHub
                     </div>
-                    <div className="font-orbitron text-white">
+                    <div className="font-orbitron text-white transition-colors group-hover:text-[var(--neon-pink)]">
                       github.com/gateofheaven7
                     </div>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full border border-[var(--neon-purple)] flex items-center justify-center">
+                <a
+                  href="https://www.instagram.com/taufikrmlnn?igsh=MWZjejMwbTVzcm5vMg=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-4 group cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-full border border-[var(--neon-purple)] flex items-center justify-center transition-colors group-hover:bg-[var(--neon-purple)] group-hover:bg-opacity-10">
                     <span className="text-[var(--neon-purple)]">📸</span>
                   </div>
                   <div>
                     <div className="font-orbitron text-sm text-gray-400">
                       Instagram
                     </div>
-                    <div className="font-orbitron text-white">@taufikrmlnn</div>
+                    <div className="font-orbitron text-white transition-colors group-hover:text-[var(--neon-purple)]">
+                      @taufikrmlnn
+                    </div>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
