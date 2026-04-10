@@ -14,16 +14,17 @@ const orbitron = Orbitron({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://portofolio-taufik-rmln.vercel.app'),
   title: "Portofolio Taufik Ramlan",
   description: "Portofolio profesional Taufik Ramlan Alfiansyah. Seorang web developer yang siap merealisasikan produk digital Anda.",
   openGraph: {
     title: "Portofolio Taufik Ramlan | Web Developer",
     description: "Jelajahi portofolio interaktif Taufik Ramlan Alfiansyah. Menampilkan berbagai proyek, skill, dan pengalaman di ranah web development.",
-    url: "https://gateofheaven07.github.io/",
+    url: "https://portofolio-taufik-rmln.vercel.app/",
     siteName: "Portofolio Taufik",
     images: [
       {
-        url: "/taufik_profile.png",
+        url: "/taufik_profile.jpeg",
         width: 1200,
         height: 630,
         alt: "Portofolio Taufik Ramlan",
