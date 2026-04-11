@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -133,18 +134,26 @@ export default function Navbar() {
             <div className="sm:hidden relative z-[61]">
               <button 
                 onClick={toggleMenu}
-                className="text-white hover:text-white transition-all duration-300 p-2 rounded-lg hover:bg-white/10 active:bg-white/15"
+                className="relative w-10 h-10 flex items-center justify-center p-2 rounded-lg hover:bg-white/10 active:bg-white/15 transition-colors focus:outline-none"
                 aria-label="Toggle menu"
               >
-                {isMenuOpen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
+                <div className="w-6 h-5 flex flex-col justify-center items-center relative">
+                  <motion.span
+                    animate={isMenuOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -7 }}
+                    className="w-6 h-[2px] bg-white rounded-full absolute"
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  />
+                  <motion.span
+                    animate={isMenuOpen ? { opacity: 0, scale: 0.5 } : { opacity: 1, scale: 1 }}
+                    className="w-6 h-[2px] bg-white rounded-full absolute"
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  />
+                  <motion.span
+                    animate={isMenuOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 7 }}
+                    className="w-6 h-[2px] bg-white rounded-full absolute"
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  />
+                </div>
               </button>
             </div>
           </div>
@@ -152,56 +161,75 @@ export default function Navbar() {
       </nav>
 
       {/* Backdrop overlay when menu is open */}
-      {isMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 z-[60] sm:hidden"
-          onClick={toggleMenu}
-        />
-      )}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] sm:hidden"
+            onClick={toggleMenu}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu Dropdown - Outside nav for better z-index control */}
-      {isMenuOpen && (
-        <div 
-          className="sm:hidden fixed top-[60px] left-0 right-0 bg-black border-b border-white/20 shadow-2xl z-[70] w-full"
-          style={{ 
-            maxHeight: 'calc(100vh - 60px)',
-            overflowY: 'auto',
-            overflowX: 'hidden',
-            WebkitOverflowScrolling: 'touch'
-          }}
-        >
-          <div className="flex flex-col py-4 px-4 space-y-1">
-            <button
-              onClick={() => scrollToSection("hero")}
-              className="text-left text-base text-white font-orbitron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-white/10 hover:text-[var(--neon-cyan)] active:bg-white/15"
-              style={{ touchAction: 'manipulation' }}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="sm:hidden fixed top-[60px] left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-white/10 shadow-2xl z-[70] w-full"
+            style={{ 
+              maxHeight: 'calc(100vh - 60px)',
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              WebkitOverflowScrolling: 'touch'
+            }}
+          >
+            <motion.div 
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={{
+                open: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+                closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+              }}
+              className="flex flex-col py-6 px-4 space-y-2"
             >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("about")}
-              className="text-left text-base text-white font-orbitron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-white/10 hover:text-[var(--neon-cyan)] active:bg-white/15"
-              style={{ touchAction: 'manipulation' }}
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="text-left text-base text-white font-orbitron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-white/10 hover:text-[var(--neon-cyan)] active:bg-white/15"
-              style={{ touchAction: 'manipulation' }}
-            >
-              Project
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="text-left text-base text-white font-orbitron transition-all duration-300 py-3 px-4 rounded-lg hover:bg-white/10 hover:text-[var(--neon-cyan)] active:bg-white/15"
-              style={{ touchAction: 'manipulation' }}
-            >
-              Contact
-            </button>
-          </div>
-        </div>
-      )}
+              {[
+                { id: "hero", label: "Home" },
+                { id: "about", label: "About" },
+                { id: "projects", label: "Project" },
+                { id: "contact", label: "Contact" }
+              ].map((item) => (
+                <motion.div
+                  key={item.id}
+                  variants={{
+                    open: { opacity: 1, x: 0 },
+                    closed: { opacity: 0, x: -20 }
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <button
+                    onClick={() => scrollToSection(item.id)}
+                    className="w-full flex items-center justify-between text-left text-lg text-white/90 font-orbitron transition-all duration-300 py-4 px-5 rounded-xl hover:bg-white/10 hover:text-[var(--neon-cyan)] active:bg-white/15 active:scale-[0.98]"
+                    style={{ touchAction: 'manipulation' }}
+                  >
+                    <span>{item.label}</span>
+                    <svg className="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
