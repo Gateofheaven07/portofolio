@@ -55,7 +55,7 @@ export function AnimateIn({
   children,
   variant    = "fade-up",
   delay      = 0,
-  duration   = 0.85,
+  duration   = 0.4,
   className  = "",
   once       = true,
   threshold  = 0.12,

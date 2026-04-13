@@ -36,7 +36,7 @@ const categoryColors = {
 
 function SkillCard({ skill, index }: { skill: Skill; index: number }) {
   return (
-    <AnimateIn variant="scale-in" delay={index * 0.06} duration={0.6} threshold={0.05}>
+    <AnimateIn variant="scale-in" delay={index * 0.04} duration={0.4} threshold={0.05}>
       <div className="card-shimmer group flex flex-col items-center justify-center w-full aspect-square rounded-2xl p-4 sm:p-6 transition-transform duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer bg-slate-900/80 border border-white/10 hover:bg-slate-800 shadow-lg hover:shadow-2xl">
         <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex flex-1 items-center justify-center mb-3">
           <img
@@ -94,7 +94,7 @@ export default function SkillsSection() {
       <div className="max-w-7xl mx-auto relative z-10">
 
         {/* ── Section Header ── */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
           <div className="text-center mb-16 space-y-4">
             <TextReveal
               as="h2"
@@ -113,7 +113,7 @@ export default function SkillsSection() {
         </AnimateIn>
 
         {/* ── Category Legend ── */}
-        <AnimateIn variant="fade-up" delay={0.15} duration={0.7}>
+        <AnimateIn variant="fade-up" delay={0.05} duration={0.4}>
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {Object.entries(categoryColors).map(([category, color]) => (
               <div key={category} className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export default function SkillsSection() {
         {/* ── Summary Cards ── */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {summaryCards.map((item, i) => (
-            <AnimateIn key={item.label} variant="fade-up" delay={0.2 + i * 0.08} duration={0.65}>
+            <AnimateIn key={item.label} variant="fade-up" delay={0.1 + i * 0.05} duration={0.4}>
               <div
                 className="card-shimmer text-center rounded-lg p-6"
                 style={{
@@ -159,7 +159,7 @@ export default function SkillsSection() {
         </div>
 
         {/* ── Call to Action ── */}
-        <AnimateIn variant="scale-in" delay={0.1} duration={0.8} threshold={0.2}>
+        <AnimateIn variant="scale-in" delay={0.05} duration={0.4} threshold={0.2}>
           <div className="text-center mt-16">
             <div
               className="card-shimmer rounded-2xl p-8 max-w-2xl mx-auto"

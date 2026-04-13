@@ -96,7 +96,7 @@ export default function ContactSection() {
       />
 
       <div className="max-w-4xl mx-auto relative z-10">
-        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
           <div className="text-center mb-16 space-y-4">
             <TextReveal
               as="h2"
@@ -117,7 +117,7 @@ export default function ContactSection() {
 
         <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
           {/* Form — slide in from left */}
-          <AnimateIn variant="fade-right" delay={0.1} duration={0.75}>
+          <AnimateIn variant="fade-right" delay={0.05} duration={0.4}>
             <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden">
             <div className="absolute inset-0 opacity-20">
               <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" />
@@ -253,7 +253,7 @@ export default function ContactSection() {
           </AnimateIn>
 
           {/* Info column — slide in from right */}
-          <AnimateIn variant="fade-left" delay={0.2} duration={0.75}>
+          <AnimateIn variant="fade-left" delay={0.1} duration={0.4}>
             <div className="space-y-8">
             <div className="glassmorphism rounded-2xl p-4 sm:p-6 md:p-8">
               <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-6">

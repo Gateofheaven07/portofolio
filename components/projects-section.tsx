@@ -267,7 +267,7 @@ export default function ProjectsSection() {
 
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
           <div className="text-center mb-16 space-y-4">
             <TextReveal
               as="h2"
@@ -288,7 +288,7 @@ export default function ProjectsSection() {
         {/* Projects Grid — stagger per card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
           {displayedProjects.map((project, index) => (
-            <AnimateIn key={project.id} variant="fade-up" delay={index * 0.1} duration={0.65} threshold={0.05}>
+            <AnimateIn key={project.id} variant="fade-up" delay={index * 0.05} duration={0.4} threshold={0.05}>
               <div className="h-full flex">
                 <ProjectCard project={project} />
               </div>
@@ -298,7 +298,7 @@ export default function ProjectsSection() {
 
         {/* View More Button */}
         {projects.length > 3 && (
-          <AnimateIn variant="fade-up" delay={0.1} duration={0.6}>
+          <AnimateIn variant="fade-up" delay={0.05} duration={0.4}>
             <div className="text-center mt-16">
               <button
                 onClick={() => setShowAllProjects(!showAllProjects)}

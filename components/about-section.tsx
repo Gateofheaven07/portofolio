@@ -73,7 +73,7 @@ export default function AboutSection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
           <div className="text-center mb-16 space-y-4">
             <TextReveal
               as="h2"
@@ -95,7 +95,7 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start content-start">
           {/* Left Column - Personal Story */}
           <div className="space-y-8">
-            <AnimateIn variant="fade-right" delay={0.1} duration={0.7}>
+            <AnimateIn variant="fade-right" delay={0.05} duration={0.4}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -116,7 +116,7 @@ export default function AboutSection() {
               </div>
             </AnimateIn>
 
-            <AnimateIn variant="fade-right" delay={0.2} duration={0.7}>
+            <AnimateIn variant="fade-right" delay={0.1} duration={0.4}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -136,7 +136,7 @@ export default function AboutSection() {
               </div>
             </AnimateIn>
 
-            <AnimateIn variant="fade-right" delay={0.3} duration={0.7}>
+            <AnimateIn variant="fade-right" delay={0.15} duration={0.4}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -177,7 +177,7 @@ export default function AboutSection() {
 
           {/* Right Column */}
           <div className="space-y-8">
-            <AnimateIn variant="fade-left" delay={0.15} duration={0.7}>
+            <AnimateIn variant="fade-left" delay={0.05} duration={0.4}>
               <div className="rounded-2xl p-8 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -206,7 +206,7 @@ export default function AboutSection() {
               </div>
             </AnimateIn>
 
-            <AnimateIn variant="fade-left" delay={0.25} duration={0.7}>
+            <AnimateIn variant="fade-left" delay={0.1} duration={0.4}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -244,7 +244,7 @@ export default function AboutSection() {
               </div>
             </AnimateIn>
 
-            <AnimateIn variant="fade-left" delay={0.35} duration={0.7}>
+            <AnimateIn variant="fade-left" delay={0.15} duration={0.4}>
               <div className="glassmorphism rounded-2xl p-8 space-y-6 h-full card-shimmer">
                 <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-4">Di Luar Kode</h3>
                 <p className="text-gray-300 leading-relaxed text-sm">

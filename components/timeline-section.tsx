@@ -376,7 +376,7 @@ export default function TimelineSection() {
 
       <div className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4">
         {/* Section Header */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.8}>
+        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
           <div className="text-center mb-16 space-y-4">
             <TextReveal
               as="h2"
@@ -405,8 +405,8 @@ export default function TimelineSection() {
               <div key={achievement.id} className={isHiddenOnMobile ? "hidden sm:block" : "block"}>
                 <AnimateIn
                   variant="fade-right"
-                  delay={index * 0.09}
-                  duration={0.6}
+                  delay={index * 0.06}
+                  duration={0.4}
                   threshold={0.08}
                 >
                   <TimelineNode
@@ -443,7 +443,7 @@ export default function TimelineSection() {
             { label: "Awards",         count: achievements.filter((a) => a.type === "award").length,         color: "var(--neon-pink)"  },
             { label: "Milestones",     count: achievements.filter((a) => a.type === "milestone").length,     color: "var(--neon-cyan)"  },
           ].map((stat, i) => (
-            <AnimateIn key={stat.label} variant="scale-in" delay={0.15 + i * 0.08} duration={0.65}>
+            <AnimateIn key={stat.label} variant="scale-in" delay={0.1 + i * 0.05} duration={0.4}>
               <div className="text-center glassmorphism rounded-lg p-6">
                 <div className="text-3xl font-orbitron font-bold mb-2" style={{ color: stat.color }}>
                   {stat.count}
