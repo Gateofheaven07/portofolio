@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { AnimateIn, TextReveal } from "./animations"
+import { TextReveal } from "./animations"
+import { motion } from "framer-motion"
+import { fadeInUp, fadeInDown, staggerContainer, scaleAnimation } from "../utils/animation"
 
 interface Achievement {
   id: number
@@ -374,25 +376,33 @@ export default function TimelineSection() {
         }}
       />
 
-      <div className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4">
+      <motion.div 
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4"
+      >
         {/* Section Header */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
-          <div className="text-center mb-16 space-y-4">
-            <TextReveal
-              as="h2"
-              text="Achievement Timeline"
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon"
-            />
-            <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
-              Perjalanan pencapaian dan sertifikasi profesional saya
-            </p>
-            <div className="flex items-center justify-center space-x-4 mt-8">
+        <div className="text-center mb-16 space-y-4">
+            <motion.div variants={fadeInDown}>
+              <TextReveal
+                as="h2"
+                text="Achievement Timeline"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon"
+              />
+            </motion.div>
+            <motion.div variants={fadeInUp}>
+              <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
+                Perjalanan pencapaian dan sertifikasi profesional saya
+              </p>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="flex items-center justify-center space-x-4 mt-8">
               <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-pink)]" />
               <div className="w-2 h-2 bg-[var(--neon-pink)] rounded-full animate-pulse" />
               <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-pink)]" />
-            </div>
+            </motion.div>
           </div>
-        </AnimateIn>
 
         {/* Timeline */}
         <div className="relative space-y-6 sm:space-y-8">
@@ -403,18 +413,13 @@ export default function TimelineSection() {
             const isHiddenOnMobile = index >= 4 && !showAllTimeline
             return (
               <div key={achievement.id} className={isHiddenOnMobile ? "hidden sm:block" : "block"}>
-                <AnimateIn
-                  variant="fade-right"
-                  delay={index * 0.06}
-                  duration={0.4}
-                  threshold={0.08}
-                >
+                <motion.div variants={scaleAnimation}>
                   <TimelineNode
                     achievement={achievement}
                     onClick={() => handleNodeClick(achievement)}
                     index={index}
                   />
-                </AnimateIn>
+                </motion.div>
               </div>
             )
           })}
@@ -443,17 +448,17 @@ export default function TimelineSection() {
             { label: "Awards",         count: achievements.filter((a) => a.type === "award").length,         color: "var(--neon-pink)"  },
             { label: "Milestones",     count: achievements.filter((a) => a.type === "milestone").length,     color: "var(--neon-cyan)"  },
           ].map((stat, i) => (
-            <AnimateIn key={stat.label} variant="scale-in" delay={0.1 + i * 0.05} duration={0.4}>
+            <motion.div key={stat.label} variants={scaleAnimation}>
               <div className="text-center glassmorphism rounded-lg p-6">
                 <div className="text-3xl font-orbitron font-bold mb-2" style={{ color: stat.color }}>
                   {stat.count}
                 </div>
                 <div className="text-sm font-orbitron text-gray-400">{stat.label}</div>
               </div>
-            </AnimateIn>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Modal */}
       <Modal achievement={selectedAchievement} isOpen={isModalOpen} onClose={closeModal} />

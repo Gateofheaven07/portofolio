@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { AnimateIn, TextReveal } from "./animations"
+import { TextReveal } from "./animations"
+import { motion } from "framer-motion"
+import { fadeInUp, fadeInDown, staggerContainer, scaleAnimation } from "../utils/animation"
 
 interface Project {
   id: number
@@ -265,41 +267,48 @@ export default function ProjectsSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10 w-full">
+      <motion.div 
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-7xl mx-auto relative z-10 w-full"
+      >
         {/* Section Header */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
-          <div className="text-center mb-16 space-y-4">
-            <TextReveal
-              as="h2"
-              text="Projects & Achievements"
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon"
-            />
-            <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
-              Temukan perjalanan saya dalam mengubah ide menjadi pengalaman digital yang bermakna.
-            </p>
-            <div className="flex items-center justify-center space-x-4 mt-8">
+        <div className="text-center mb-16 space-y-4">
+            <motion.div variants={fadeInDown}>
+              <TextReveal
+                as="h2"
+                text="Projects & Achievements"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron font-bold neon-text pulse-neon"
+              />
+            </motion.div>
+            <motion.div variants={fadeInUp}>
+              <p className="text-base sm:text-lg text-gray-400 font-orbitron max-w-2xl mx-auto px-4">
+                Temukan perjalanan saya dalam mengubah ide menjadi pengalaman digital yang bermakna.
+              </p>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="flex items-center justify-center space-x-4 mt-8">
               <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-cyan)]" />
               <div className="w-2 h-2 bg-[var(--neon-cyan)] rounded-full animate-pulse" />
               <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-cyan)]" />
-            </div>
+            </motion.div>
           </div>
-        </AnimateIn>
 
         {/* Projects Grid — stagger per card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
           {displayedProjects.map((project, index) => (
-            <AnimateIn key={project.id} variant="fade-up" delay={index * 0.05} duration={0.4} threshold={0.05}>
+            <motion.div key={project.id} variants={scaleAnimation}>
               <div className="h-full flex">
                 <ProjectCard project={project} />
               </div>
-            </AnimateIn>
+            </motion.div>
           ))}
         </div>
 
         {/* View More Button */}
         {projects.length > 3 && (
-          <AnimateIn variant="fade-up" delay={0.05} duration={0.4}>
-            <div className="text-center mt-16">
+          <motion.div variants={fadeInUp} className="text-center mt-16">
               <button
                 onClick={() => setShowAllProjects(!showAllProjects)}
                 className="group relative px-8 py-4 font-orbitron font-medium text-[var(--neon-green)] border-2 border-[var(--neon-green)] rounded-lg overflow-hidden transition-all duration-300 hover:text-black hover:shadow-[0_0_30px_var(--neon-green)]"
@@ -310,10 +319,9 @@ export default function ProjectsSection() {
                   <span className="text-xl">{showAllProjects ? "↑" : "→"}</span>
                 </span>
               </button>
-            </div>
-          </AnimateIn>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </section>
   )
 }

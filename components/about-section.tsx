@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { AnimateIn, TextReveal } from "./animations"
+import { TextReveal } from "./animations"
+import { motion } from "framer-motion"
+import { fadeInUp, fadeInDown, staggerContainer, scaleAnimation } from "../utils/animation"
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -71,31 +73,39 @@ export default function AboutSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <motion.div 
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-7xl mx-auto relative z-10"
+      >
         {/* Section Header */}
-        <AnimateIn variant="fade-up" delay={0} duration={0.4}>
-          <div className="text-center mb-16 space-y-4">
-            <TextReveal
-              as="h2"
-              text="About Me"
-              className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon"
-            />
-            <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
-              Cerita di balik kode, visi di balik layar
-            </p>
-            <div className="flex items-center justify-center space-x-4 mt-8">
+        <div className="text-center mb-16 space-y-4">
+            <motion.div variants={fadeInDown}>
+              <TextReveal
+                as="h2"
+                text="About Me"
+                className="text-4xl md:text-6xl font-orbitron font-bold neon-text pulse-neon"
+              />
+            </motion.div>
+            <motion.div variants={fadeInUp}>
+              <p className="text-lg text-gray-400 font-orbitron max-w-2xl mx-auto">
+                Cerita di balik kode, visi di balik layar
+              </p>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="flex items-center justify-center space-x-4 mt-8">
               <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[var(--neon-green)]" />
               <div className="w-2 h-2 bg-[var(--neon-green)] rounded-full animate-pulse" />
               <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[var(--neon-green)]" />
-            </div>
+            </motion.div>
           </div>
-        </AnimateIn>
 
         {/* Two-column cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start content-start">
           {/* Left Column - Personal Story */}
           <div className="space-y-8">
-            <AnimateIn variant="fade-right" delay={0.05} duration={0.4}>
+            <motion.div variants={scaleAnimation}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -114,9 +124,9 @@ export default function AboutSection() {
                   dalam berbagai bidang teknologi informasi untuk menciptakan solusi yang inovatif dan berkualitas.
                 </p>
               </div>
-            </AnimateIn>
+            </motion.div>
 
-            <AnimateIn variant="fade-right" delay={0.1} duration={0.4}>
+            <motion.div variants={scaleAnimation}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -134,9 +144,9 @@ export default function AboutSection() {
                   <span className="text-[var(--neon-green)] font-orbitron text-sm">"Kode adalah puisi dalam gerakan"</span>
                 </div>
               </div>
-            </AnimateIn>
+            </motion.div>
 
-            <AnimateIn variant="fade-right" delay={0.15} duration={0.4}>
+            <motion.div variants={scaleAnimation}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -172,12 +182,12 @@ export default function AboutSection() {
                   </button>
                 </div>
               </div>
-            </AnimateIn>
+            </motion.div>
           </div>
 
           {/* Right Column */}
           <div className="space-y-8">
-            <AnimateIn variant="fade-left" delay={0.05} duration={0.4}>
+            <motion.div variants={scaleAnimation}>
               <div className="rounded-2xl p-8 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -204,9 +214,9 @@ export default function AboutSection() {
                   </div>
                 </div>
               </div>
-            </AnimateIn>
+            </motion.div>
 
-            <AnimateIn variant="fade-left" delay={0.1} duration={0.4}>
+            <motion.div variants={scaleAnimation}>
               <div className="rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 h-full card-shimmer" style={{
                 background: "rgba(15, 23, 42, 0.95)",
                 backdropFilter: "blur(20px)",
@@ -242,9 +252,9 @@ export default function AboutSection() {
                   </div>
                 </div>
               </div>
-            </AnimateIn>
+            </motion.div>
 
-            <AnimateIn variant="fade-left" delay={0.15} duration={0.4}>
+            <motion.div variants={scaleAnimation}>
               <div className="glassmorphism rounded-2xl p-8 space-y-6 h-full card-shimmer">
                 <h3 className="text-2xl font-orbitron font-bold text-[var(--neon-green)] mb-4">Di Luar Kode</h3>
                 <p className="text-gray-300 leading-relaxed text-sm">
@@ -263,13 +273,13 @@ export default function AboutSection() {
                   ))}
                 </div>
               </div>
-            </AnimateIn>
+            </motion.div>
           </div>
         </div>
 
         {/* Call to Action - removed from bottom (moved to left column) */}
 
-      </div>
+      </motion.div>
 
       {/* Floating Elements */}
       <div className="absolute top-20 left-10 w-1 h-20 bg-gradient-to-b from-[var(--neon-cyan)] to-transparent opacity-30 animate-pulse" />
