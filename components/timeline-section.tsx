@@ -380,7 +380,7 @@ export default function TimelineSection() {
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         className="max-w-4xl mx-auto relative z-10 w-full px-2 sm:px-4"
       >
         {/* Section Header */}
