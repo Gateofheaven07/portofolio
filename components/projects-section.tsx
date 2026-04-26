@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { TextReveal } from "./animations"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { fadeInUp, fadeInDown, staggerContainer, scaleAnimation } from "../utils/animation"
 
 interface Project {
@@ -18,6 +18,15 @@ interface Project {
 }
 
 const projects: Project[] = [
+    {
+    id: 10,
+    title: "Analisis Popularitas Game Online: Prediksi Interaksi Menggunakan Model Linear",
+    description: "Proyek Data Science ini bertujuan untuk memprediksi tingkat popularitas sebuah video game berdasarkan metadata tekstual (Name, Description, Tags) menggunakan teknik Natural Language Processing (NLP) dan algoritma Logistic Regression.",
+    tech: ["Python", "Scikit-learn", "NLP"],
+    image: "/Logistic.jpg",
+    demoUrl: "https://data-science-portofolio.vercel.app/projects/games-classification",
+    githubUrl: "https://github.com/Gateofheaven07/Data-Science-Portofolio",
+  },
   {
     id: 9,
     title: "Drama Cina Flix",
@@ -69,6 +78,15 @@ const projects: Project[] = [
     image: "/jurnal.png",
     demoUrl: "https://journal.fkpt.org/index.php/comforch/article/view/2329/1049",
     buttonText: "Visit Journal",
+  },
+  {
+    id: 11,
+    title: "California Housing Price Prediction",
+    description: "Proyek studi kasus End-to-End Machine Learning yang berfokus pada prediksi harga rumah rata-rata di California. Proyek ini mengeksplorasi faktor-faktor pendorong nilai properti dengan menangani pola non-linear melalui algoritma ensemble.",
+    tech: ["Python", "Scikit-learn", "Random Forest"],
+    image: "/rf-regression.jpg",
+    demoUrl: "https://data-science-portofolio.vercel.app/projects/california-housing",
+    githubUrl: "https://github.com/Gateofheaven07/forecasting-house-california",
   },
   {
     id: 6,
@@ -296,15 +314,24 @@ export default function ProjectsSection() {
           </div>
 
         {/* Projects Grid — stagger per card */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
-          {displayedProjects.map((project, index) => (
-            <motion.div key={project.id} variants={scaleAnimation}>
-              <div className="h-full flex">
-                <ProjectCard project={project} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch w-full" style={{ touchAction: 'pan-y' }}>
+          <AnimatePresence mode="popLayout">
+            {displayedProjects.map((project, index) => (
+              <motion.div 
+                key={project.id} 
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: index >= 3 ? (index - 3) * 0.08 : index * 0.08 }}
+              >
+                <div className="h-full flex">
+                  <ProjectCard project={project} />
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         {/* View More Button */}
         {projects.length > 3 && (
