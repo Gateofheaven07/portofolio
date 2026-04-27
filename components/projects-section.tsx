@@ -25,7 +25,7 @@ const projects: Project[] = [
     tech: ["Python", "Scikit-learn", "NLP"],
     image: "/Logistic.jpg",
     demoUrl: "https://data-science-portofolio.vercel.app/projects/games-classification",
-    githubUrl: "https://github.com/Gateofheaven07/Data-Science-Portofolio",
+    githubUrl: "https://github.com/Gateofheaven07/games-classification-logistic-regression",
   },
   {
     id: 9,
